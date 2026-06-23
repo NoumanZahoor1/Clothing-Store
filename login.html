@@ -866,6 +866,16 @@
                     this.style.transform = 'translateY(0)';
                 });
             });
+
+            // Guest login event listeners
+            const guestLinks = document.querySelectorAll('#continue-guest, #continue-guest-signup');
+            guestLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.setItem('currentUser', JSON.stringify({ email: 'guest@naastore.com', name: 'Guest', isGuest: true }));
+                    window.location.href = 'index.html';
+                });
+            });
             
             // Initialize destination selection
             initDestinationSelection();
