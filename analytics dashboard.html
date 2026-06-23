@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Analytics - NAA-Admin</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        li {
+            list-style: none;
+        }
+        
+        :root {
+            --poppins: 'Poppins', sans-serif;
+            --lato: 'Lato', sans-serif;
+        
+            --light: #F9F9F9;
+            --blue: #3C91E6;
+            --light-blue: #CFE8FF;
+            --grey: #eee;
+            --dark-grey: #AAAAAA;
+            --dark: #342E37;
+            --red: #DB504A;
+            --yellow: #FFCE26;
+            --light-yellow: #FFF2C6;
+            --orange: #FD7238;
+            --light-orange: #FFE0D3;
+        }
+        
+        html {
+            overflow-x: hidden;
+        }
+        
+        body.dark {
+            --light: #0C0C1E;
+            --grey: #060714;
+            --dark: #FBFBFB;
+        }
+        
+        body {
+            background: var(--grey);
+            overflow-x: hidden;
+        }
+        
+        /* SIDEBAR */
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100%;
+            background: var(--light);
+            z-index: 2000;
+            font-family: var(--lato);
+            transition: .3s ease;
+            overflow-x: hidden;
+            scrollbar-width: none;
+        }
+        #sidebar::--webkit-scrollbar {
+            display: none;
+        }
+        #sidebar.hide {
+            width: 60px;
+        }
+        #sidebar .brand {
+            font-size: 24px;
+            font-weight: 700;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            color: var(--blue);
+            position: sticky;
+            top: 0;
+            left: 0;
+            background: var(--light);
+            z-index: 500;
+            padding-bottom: 20px;
+            box-sizing: content-box;
+        }
+        #sidebar .brand .bx {
+            min-width: 60px;
+            display: flex;
+            justify-content: center;
+        }
+        #sidebar .side-menu {
+            width: 100%;
+            margin-top: 48px;
+        }
+        #sidebar .side-menu li {
+            height: 48px;
+            background: transparent;
+            margin-left: 6px;
+            border-radius: 48px 0 0 48px;
+            padding: 4px;
+        }
+        #sidebar .side-menu li.active {
+            background: var(--grey);
+            position: relative;
+        }
+        #sidebar .side-menu li.active::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            top: -40px;
+            right: 0;
+            box-shadow: 20px 20px 0 var(--grey);
+            z-index: -1;
+        }
+        #sidebar .side-menu li.active::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            bottom: -40px;
+            right: 0;
+            box-shadow: 20px -20px 0 var(--grey);
+            z-index: -1;
+        }
+        #sidebar .side-menu li a {
+            width: 100%;
+            height: 100%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            border-radius: 48px;
+            font-size: 16px;
+            color: var(--dark);
+            white-space: nowrap;
+            overflow-x: hidden;
+        }
+        #sidebar .side-menu.top li.active a {
+            color: var(--blue);
+        }
+        #sidebar.hide .side-menu li a {
+            width: calc(48px - (4px * 2));
+            transition: width .3s ease;
+        }
+        #sidebar .side-menu li a.logout {
+            color: var(--red);
+        }
+        #sidebar .side-menu.top li a:hover {
+            color: var(--blue);
+        }
+        #sidebar .side-menu li a .bx {
+            min-width: calc(60px  - ((4px + 6px) * 2));
+            display: flex;
+            justify-content: center;
+        }
+        /* SIDEBAR */
+        
+        /* CONTENT */
+        #content {
+            position: relative;
+            width: calc(100% - 280px);
+            left: 280px;
+            transition: .3s ease;
+        }
+        #sidebar.hide ~ #content {
+            width: calc(100% - 60px);
+            left: 60px;
+        }
+        
+        /* NAVBAR */
+        #content nav {
+            height: 56px;
+            background: var(--light);
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            grid-gap: 24px;
+            font-family: var(--lato);
+            position: sticky;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        #content nav::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            bottom: -40px;
+            left: 0;
+            border-radius: 50%;
+            box-shadow: -20px -20px 0 var(--light);
+        }
+        #content nav a {
+            color: var(--dark);
+        }
+        #content nav .bx.bx-menu {
+            cursor: pointer;
+            color: var(--dark);
+        }
+        #content nav .nav-link {
+            font-size: 16px;
+            transition: .3s ease;
+        }
+        #content nav .nav-link:hover {
+            color: var(--blue);
+        }
+        #content nav form {
+            max-width: 400px;
+            width: 100%;
+            margin-right: auto;
+        }
+        #content nav form .form-input {
+            display: flex;
+            align-items: center;
+            height: 36px;
+        }
+        #content nav form .form-input input {
+            flex-grow: 1;
+            padding: 0 16px;
+            height: 100%;
+            border: none;
+            background: var(--grey);
+            border-radius: 36px 0 0 36px;
+            outline: none;
+            width: 100%;
+            color: var(--dark);
+        }
+        #content nav form .form-input button {
+            width: 36px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--blue);
+            color: var(--light);
+            font-size: 18px;
+            border: none;
+            outline: none;
+            border-radius: 0 36px 36px 0;
+            cursor: pointer;
+        }
+        #content nav .notification {
+            font-size: 20px;
+            position: relative;
+        }
+        #content nav .notification .num {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--light);
+            background: var(--red);
+            color: var(--light);
+            font-weight: 700;
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #content nav .profile img {
+            width: 36px;
+            height: 36px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        #content nav .switch-mode {
+            display: block;
+            min-width: 50px;
+            height: 25px;
+            border-radius: 25px;
+            background: var(--grey);
+            cursor: pointer;
+            position: relative;
+        }
+        #content nav .switch-mode::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            bottom: 2px;
+            width: calc(25px - 4px);
+            background: var(--blue);
+            border-radius: 50%;
+            transition: all .3s ease;
+        }
+        #content nav #switch-mode:checked + .switch-mode::before {
+            left: calc(100% - (25px - 4px) - 2px);
+        }
+        /* NAVBAR */
+        
+        /* MAIN */
+        #content main {
+            width: 100%;
+            padding: 36px 24px;
+            font-family: var(--poppins);
+            max-height: calc(100vh - 56px);
+            overflow-y: auto;
+        }
+        #content main .head-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            grid-gap: 16px;
+            flex-wrap: wrap;
+        }
+        #content main .head-title .left h1 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        #content main .head-title .left .breadcrumb {
+            display: flex;
+            align-items: center;
+            grid-gap: 16px;
+        }
+        #content main .head-title .left .breadcrumb li {
+            color: var(--dark);
+        }
+        #content main .head-title .left .breadcrumb li a {
+            color: var(--dark-grey);
+            pointer-events: none;
+        }
+        #content main .head-title .left .breadcrumb li a.active {
+            color: var(--blue);
+            pointer-events: unset;
+        }
+        #content main .head-title .btn-download {
+            height: 36px;
+            padding: 0 16px;
+            border-radius: 36px;
+            background: var(--blue);
+            color: var(--light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            grid-gap: 10px;
+            font-weight: 500;
+        }
+        
+        /* Analytics Stats */
+        #content main .analytics-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-gap: 24px;
+            margin-top: 36px;
+        }
+        #content main .analytics-stats li {
+            padding: 24px;
+            background: var(--light);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            grid-gap: 24px;
+        }
+        #content main .analytics-stats li .bx {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            font-size: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #content main .analytics-stats li:nth-child(1) .bx {
+            background: var(--light-blue);
+            color: var(--blue);
+        }
+        #content main .analytics-stats li:nth-child(2) .bx {
+            background: var(--light-yellow);
+            color: var(--yellow);
+        }
+        #content main .analytics-stats li:nth-child(3) .bx {
+            background: var(--light-orange);
+            color: var(--orange);
+        }
+        #content main .analytics-stats li:nth-child(4) .bx {
+            background: var(--light-blue);
+            color: var(--blue);
+        }
+        #content main .analytics-stats li .text h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        #content main .analytics-stats li .text p {
+            color: var(--dark);    
+        }
+        #content main .analytics-stats li .trend {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        #content main .analytics-stats li .trend.up {
+            color: #10B981;
+        }
+        #content main .analytics-stats li .trend.down {
+            color: #EF4444;
+        }
+        
+        /* Analytics Charts */
+        #content main .analytics-charts {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-gap: 24px;
+            margin-top: 36px;
+        }
+        
+        @media screen and (max-width: 1024px) {
+            #content main .analytics-charts {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .chart-card {
+            background: var(--light);
+            padding: 24px;
+            border-radius: 20px;
+            overflow-x: auto;
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .chart-header h3 {
+            color: var(--dark);
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .chart-filter {
+            padding: 8px 12px;
+            border: 1px solid var(--grey);
+            border-radius: 8px;
+            outline: none;
+            background: var(--light);
+            color: var(--dark);
+        }
+        
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+        
+        /* Analytics Tables */
+        #content main .table-data {
+            display: flex;
+            flex-wrap: wrap;
+            grid-gap: 24px;
+            margin-top: 36px;
+            width: 100%;
+            color: var(--dark);
+        }
+        #content main .table-data > div {
+            border-radius: 20px;
+            background: var(--light);
+            padding: 24px;
+            overflow-x: auto;
+        }
+        #content main .table-data .head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        #content main .table-data .head h3 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        #content main .table-data .head .actions {
+            display: flex;
+            align-items: center;
+            grid-gap: 16px;
+        }
+        #content main .table-data .head .bx {
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        #content main .table-data .top-products {
+            flex-grow: 1;
+            flex-basis: 100%;
+        }
+        #content main .table-data .top-products table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #content main .table-data .top-products table th {
+            padding-bottom: 12px;
+            font-size: 13px;
+            text-align: left;
+            border-bottom: 1px solid var(--grey);
+        }
+        #content main .table-data .top-products table td {
+            padding: 16px 0;
+        }
+        #content main .table-data .top-products table tr td:first-child {
+            display: flex;
+            align-items: center;
+            grid-gap: 12px;
+            padding-left: 6px;
+        }
+        #content main .table-data .top-products table td img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        #content main .table-data .top-products table tbody tr:hover {
+            background: var(--grey);
+        }
+        #content main .table-data .top-products table tr td .trend {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+        }
+        #content main .table-data .top-products table tr td .trend.up {
+            color: #10B981;
+        }
+        #content main .table-data .top-products table tr td .trend.down {
+            color: #EF4444;
+        }
+        
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            #sidebar {
+                width: 200px;
+            }
+        
+            #content {
+                width: calc(100% - 60px);
+                left: 200px;
+            }
+        
+            #content nav .nav-link {
+                display: none;
+            }
+        }
+        
+        @media screen and (max-width: 576px) {
+            #content nav form .form-input input {
+                display: none;
+            }
+        
+            #content nav form .form-input button {
+                width: auto;
+                height: auto;
+                background: transparent;
+                border-radius: none;
+                color: var(--dark);
+            }
+        
+            #content nav form.show .form-input input {
+                display: block;
+                width: 100%;
+            }
+            #content nav form.show .form-input button {
+                width: 36px;
+                height: 100%;
+                border-radius: 0 36px 36px 0;
+                color: var(--light);
+                background: var(--red);
+            }
+        
+            #content nav form.show ~ .notification,
+            #content nav form.show ~ .profile {
+                display: none;
+            }
+        
+            #content main .analytics-stats {
+                grid-template-columns: 1fr;
+            }
+        
+            #content main .table-data .head {
+                min-width: 420px;
+            }
+            #content main .table-data .top-products table {
+                min-width: 420px;
+            }
+            
+            .chart-header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a href="#" class="brand">
+            <i class='bx bxs-smile'></i>
+            <span class="text">NAA-Admin</span>
+        </a>
+        <ul class="side-menu top">
+            <li>
+                <a href="dashboard.html">
+                    <i class='bx bxs-dashboard' ></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="my store dasboard.html">
+                    <i class='bx bxs-shopping-bag-alt' ></i>
+                    <span class="text">My Store</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="#">
+                    <i class='bx bxs-doughnut-chart' ></i>
+                    <span class="text">Analytics</span>
+                </a>
+            </li>
+            <li>
+                <a href="message dashboard.html">
+                    <i class='bx bxs-message-dots' ></i>
+                    <span class="text">Message</span>
+                </a>
+            </li>
+            <li>
+                <a href="team dashboard.html">
+                    <i class='bx bxs-group' ></i>
+                    <span class="text">Team</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a href="setting dashboard.html">
+                    <i class='bx bxs-cog' ></i>
+                    <span class="text">Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="logout">
+                    <i class='bx bxs-log-out-circle' ></i>
+                    <span class="text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu' ></i>
+            <a href="#" class="nav-link">Categories</a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search analytics...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="switch-mode" hidden>
+            <label for="switch-mode" class="switch-mode"></label>
+            <a href="#" class="notification">
+                <i class='bx bxs-bell' ></i>
+                <span class="num">3</span>
+            </a>
+            <a href="#" class="profile">
+                <img src="img/logo1.png">
+            </a>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+        <main>
+            <div class="head-title">
+                <div class="left">
+                    <h1>Analytics</h1>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="dashboard.html">Dashboard</a>
+                        </li>
+                        <li><i class='bx bx-chevron-right' ></i></li>
+                        <li>
+                            <a class="active" href="#">Analytics</a>
+                        </li>
+                    </ul>
+                </div>
+                <a href="#" class="btn-download">
+                    <i class='bx bxs-cloud-download' ></i>
+                    <span class="text">Export Report</span>
+                </a>
+            </div>
+
+            <ul class="analytics-stats">
+                <li>
+                    <i class='bx bxs-shopping-bag' ></i>
+                    <span class="text">
+                        <h3>1,245</h3>
+                        <p>Total Sales</p>
+                        <div class="trend up">
+                            <i class='bx bx-up-arrow-alt'></i>
+                            <span>12.5%</span>
+                        </div>
+                    </span>
+                </li>
+                <li>
+                    <i class='bx bxs-user' ></i>
+                    <span class="text">
+                        <h3>12,847</h3>
+                        <p>Total Visitors</p>
+                        <div class="trend up">
+                            <i class='bx bx-up-arrow-alt'></i>
+                            <span>8.3%</span>
+                        </div>
+                    </span>
+                </li>
+                <li>
+                    <i class='bx bxs-dollar-circle' ></i>
+                    <span class="text">
+                        <h3>$45,678</h3>
+                        <p>Total Revenue</p>
+                        <div class="trend up">
+                            <i class='bx bx-up-arrow-alt'></i>
+                            <span>15.2%</span>
+                        </div>
+                    </span>
+                </li>
+                <li>
+                    <i class='bx bxs-cart' ></i>
+                    <span class="text">
+                        <h3>3.2%</h3>
+                        <p>Conversion Rate</p>
+                        <div class="trend down">
+                            <i class='bx bx-down-arrow-alt'></i>
+                            <span>2.1%</span>
+                        </div>
+                    </span>
+                </li>
+            </ul>
+
+            <div class="analytics-charts">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Sales Performance</h3>
+                        <select class="chart-filter" id="salesFilter">
+                            <option>Last 7 days</option>
+                            <option>Last 30 days</option>
+                            <option>Last 90 days</option>
+                        </select>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Traffic Sources</h3>
+                        <select class="chart-filter" id="trafficFilter">
+                            <option>This Month</option>
+                            <option>Last Month</option>
+                            <option>This Year</option>
+                        </select>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="trafficChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analytics-charts">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Revenue Trends</h3>
+                        <select class="chart-filter" id="revenueFilter">
+                            <option>Last 6 Months</option>
+                            <option>Last Year</option>
+                            <option>All Time</option>
+                        </select>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Customer Demographics</h3>
+                        <select class="chart-filter" id="demographicsFilter">
+                            <option>By Age</option>
+                            <option>By Location</option>
+                            <option>By Gender</option>
+                        </select>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="demographicsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-data">
+                <div class="top-products">
+                    <div class="head">
+                        <h3>Top Performing Products</h3>
+                        <div class="actions">
+                            <i class='bx bx-search' ></i>
+                            <i class='bx bx-filter' ></i>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Units Sold</th>
+                                <th>Revenue</th>
+                                <th>Trend</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img src="img/products/n7.jpg" alt="Product">
+                                    <p>Casual Wear T-Shirt</p>
+                                </td>
+                                <td>T-Shirts<td>
+                                <td>$29.99</td>
+                                <td>245</td>
+                                <td>$7,345</td>
+                                <td><span class="trend up"><i class='bx bx-up-arrow-alt'></i> 15%</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="img/products/n6.jpg" alt="Product">
+                                    <p>Sport Running Shorts</p>
+                                </td>
+                                <td>T-Shirts</td>
+                                <td>$89.99</td>
+                                <td>187</td>
+                                <td>$16,823</td>
+                                <td><span class="trend up"><i class='bx bx-up-arrow-alt'></i> 22%</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="img/products/n8.jpg" alt="Product">
+                                    <p>Classic Design T-Shirt</p>
+                                </td>
+                                <td>T-Shirts</td>
+                                <td>$49.99</td>
+                                <td>156</td>
+                                <td>$7,799</td>
+                                <td><span class="trend down"><i class='bx bx-down-arrow-alt'></i> 5%</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="https://images.unsplash.com/photo-1666792529510-9616222246d8?q=80&w=435&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D alt="Training Jogger Pants"" alt="Product">
+                                    <p>Training Jogger Pants</p>
+                                </td>
+                                <td>Pants</td>
+                                <td>$79.99</td>
+                                <td>134</td>
+                                <td>$10,719</td>
+                                <td><span class="trend up"><i class='bx bx-up-arrow-alt'></i> 18%</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="https://images.unsplash.com/photo-1624378441864-6eda7eac51cb?q=80&w=388&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Premium Track Pants"" alt="Product">
+                                    <p>Premium Track Pants</p>
+                                </td>
+                                <td>Pants</td>
+                                <td>$129.99</td>
+                                <td>98</td>
+                                <td>$12,739</td>
+                                <td><span class="trend up"><i class='bx bx-up-arrow-alt'></i> 12%</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+        <!-- MAIN -->
+    </section>
+    <!-- CONTENT -->
+    
+    <script>
+        // Sample data for analytics
+        const analyticsData = {
+            salesData: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                data: [12500, 18900, 15200, 19800, 22500, 24800, 28500]
+            },
+            trafficData: {
+                labels: ['Direct', 'Social', 'Email', 'Organic', 'Referral'],
+                data: [35, 25, 15, 15, 10]
+            },
+            revenueData: {
+                labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                data: [45000, 52000, 48000, 61000]
+            },
+            demographicsData: {
+                labels: ['18-24', '25-34', '35-44', '45-54', '55+'],
+                data: [15, 35, 25, 15, 10]
+            }
+        };
+
+        // Initialize the analytics page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+            setupEventListeners();
+        });
+
+        // Initialize Chart.js charts
+        function initializeCharts() {
+            // Sales Chart (Line Chart)
+            const salesCtx = document.getElementById('salesChart').getContext('2d');
+            new Chart(salesCtx, {
+                type: 'line',
+                data: {
+                    labels: analyticsData.salesData.labels,
+                    datasets: [{
+                        label: 'Sales',
+                        data: analyticsData.salesData.data,
+                        borderColor: '#3C91E6',
+                        backgroundColor: 'rgba(60, 145, 230, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Traffic Chart (Doughnut Chart)
+            const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+            new Chart(trafficCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: analyticsData.trafficData.labels,
+                    datasets: [{
+                        data: analyticsData.trafficData.data,
+                        backgroundColor: [
+                            '#3C91E6',
+                            '#FD7238',
+                            '#FFCE26',
+                            '#DB504A',
+                            '#342E37'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Revenue Chart (Bar Chart)
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(revenueCtx, {
+                type: 'bar',
+                data: {
+                    labels: analyticsData.revenueData.labels,
+                    datasets: [{
+                        label: 'Revenue',
+                        data: analyticsData.revenueData.data,
+                        backgroundColor: '#3C91E6',
+                        borderColor: '#3C91E6',
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Demographics Chart (Bar Chart)
+            const demographicsCtx = document.getElementById('demographicsChart').getContext('2d');
+            new Chart(demographicsCtx, {
+                type: 'bar',
+                data: {
+                    labels: analyticsData.demographicsData.labels,
+                    datasets: [{
+                        label: 'Customers',
+                        data: analyticsData.demographicsData.data,
+                        backgroundColor: '#FD7238',
+                        borderColor: '#FD7238',
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Chart filter changes
+            const chartFilters = document.querySelectorAll('.chart-filter');
+            chartFilters.forEach(filter => {
+                filter.addEventListener('change', (e) => {
+                    // In a real app, you would fetch new data based on the filter
+                    console.log('Filter changed:', e.target.value);
+                    showNotification('Analytics data updated');
+                });
+            });
+
+            // Export report button
+            const exportBtn = document.querySelector('.btn-download');
+            exportBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showNotification('Exporting analytics report...');
+            });
+        }
+
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--blue);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 20px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                z-index: 10000;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Original sidebar functionality
+        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+
+        allSideMenu.forEach(item=> {
+            const li = item.parentElement;
+        
+            item.addEventListener('click', function () {
+                allSideMenu.forEach(i=> {
+                    i.parentElement.classList.remove('active');
+                })
+                li.classList.add('active');
+            })
+        });
+        
+        // TOGGLE SIDEBAR
+        const menuBar = document.querySelector('#content nav .bx.bx-menu');
+        const sidebar = document.getElementById('sidebar');
+        
+        menuBar.addEventListener('click', function () {
+            sidebar.classList.toggle('hide');
+        })
+        
+        const searchButton = document.querySelector('#content nav form .form-input button');
+        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+        const searchForm = document.querySelector('#content nav form');
+        
+        searchButton.addEventListener('click', function (e) {
+            if(window.innerWidth < 576) {
+                e.preventDefault();
+                searchForm.classList.toggle('show');
+                if(searchForm.classList.contains('show')) {
+                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
+                } else {
+                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                }
+            }
+        })
+        
+        if(window.innerWidth < 768) {
+            sidebar.classList.add('hide');
+        } else if(window.innerWidth > 576) {
+            searchButtonIcon.classList.replace('bx-x', 'bx-search');
+            searchForm.classList.remove('show');
+        }
+        
+        window.addEventListener('resize', function () {
+            if(this.innerWidth > 576) {
+                searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                searchForm.classList.remove('show');
+            }
+        })
+        
+        const switchMode = document.getElementById('switch-mode');
+        
+        switchMode.addEventListener('change', function () {
+            if(this.checked) {
+                document.body.classList.add('dark');
+            } else {
+                document.body.classList.remove('dark');
+            }
+        })
+        
+        // Logout functionality
+        const logoutLinks = document.querySelectorAll('a.logout');
+
+        logoutLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // In a real app, you would clear user session data
+                localStorage.removeItem('currentUser');
+                
+                // Redirect to login page
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body>
+</html>

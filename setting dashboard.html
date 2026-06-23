@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <title>Settings - NAA-Admin</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        li {
+            list-style: none;
+        }
+        
+        :root {
+            --poppins: 'Poppins', sans-serif;
+            --lato: 'Lato', sans-serif;
+        
+            --light: #F9F9F9;
+            --blue: #3C91E6;
+            --light-blue: #CFE8FF;
+            --grey: #eee;
+            --dark-grey: #AAAAAA;
+            --dark: #342E37;
+            --red: #DB504A;
+            --yellow: #FFCE26;
+            --light-yellow: #FFF2C6;
+            --orange: #FD7238;
+            --light-orange: #FFE0D3;
+        }
+        
+        html {
+            overflow-x: hidden;
+        }
+        
+        body.dark {
+            --light: #0C0C1E;
+            --grey: #060714;
+            --dark: #FBFBFB;
+        }
+        
+        body {
+            background: var(--grey);
+            overflow-x: hidden;
+        }
+        
+        /* SIDEBAR */
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100%;
+            background: var(--light);
+            z-index: 2000;
+            font-family: var(--lato);
+            transition: .3s ease;
+            overflow-x: hidden;
+            scrollbar-width: none;
+        }
+        #sidebar::--webkit-scrollbar {
+            display: none;
+        }
+        #sidebar.hide {
+            width: 60px;
+        }
+        #sidebar .brand {
+            font-size: 24px;
+            font-weight: 700;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            color: var(--blue);
+            position: sticky;
+            top: 0;
+            left: 0;
+            background: var(--light);
+            z-index: 500;
+            padding-bottom: 20px;
+            box-sizing: content-box;
+        }
+        #sidebar .brand .bx {
+            min-width: 60px;
+            display: flex;
+            justify-content: center;
+        }
+        #sidebar .side-menu {
+            width: 100%;
+            margin-top: 48px;
+        }
+        #sidebar .side-menu li {
+            height: 48px;
+            background: transparent;
+            margin-left: 6px;
+            border-radius: 48px 0 0 48px;
+            padding: 4px;
+        }
+        #sidebar .side-menu li.active {
+            background: var(--grey);
+            position: relative;
+        }
+        #sidebar .side-menu li.active::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            top: -40px;
+            right: 0;
+            box-shadow: 20px 20px 0 var(--grey);
+            z-index: -1;
+        }
+        #sidebar .side-menu li.active::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            bottom: -40px;
+            right: 0;
+            box-shadow: 20px -20px 0 var(--grey);
+            z-index: -1;
+        }
+        #sidebar .side-menu li a {
+            width: 100%;
+            height: 100%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            border-radius: 48px;
+            font-size: 16px;
+            color: var(--dark);
+            white-space: nowrap;
+            overflow-x: hidden;
+        }
+        #sidebar .side-menu.top li.active a {
+            color: var(--blue);
+        }
+        #sidebar.hide .side-menu li a {
+            width: calc(48px - (4px * 2));
+            transition: width .3s ease;
+        }
+        #sidebar .side-menu li a.logout {
+            color: var(--red);
+        }
+        #sidebar .side-menu.top li a:hover {
+            color: var(--blue);
+        }
+        #sidebar .side-menu li a .bx {
+            min-width: calc(60px  - ((4px + 6px) * 2));
+            display: flex;
+            justify-content: center;
+        }
+        /* SIDEBAR */
+        
+        /* CONTENT */
+        #content {
+            position: relative;
+            width: calc(100% - 280px);
+            left: 280px;
+            transition: .3s ease;
+        }
+        #sidebar.hide ~ #content {
+            width: calc(100% - 60px);
+            left: 60px;
+        }
+        
+        /* NAVBAR */
+        #content nav {
+            height: 56px;
+            background: var(--light);
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            grid-gap: 24px;
+            font-family: var(--lato);
+            position: sticky;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        #content nav::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            bottom: -40px;
+            left: 0;
+            border-radius: 50%;
+            box-shadow: -20px -20px 0 var(--light);
+        }
+        #content nav a {
+            color: var(--dark);
+        }
+        #content nav .bx.bx-menu {
+            cursor: pointer;
+            color: var(--dark);
+        }
+        #content nav .nav-link {
+            font-size: 16px;
+            transition: .3s ease;
+        }
+        #content nav .nav-link:hover {
+            color: var(--blue);
+        }
+        #content nav form {
+            max-width: 400px;
+            width: 100%;
+            margin-right: auto;
+        }
+        #content nav form .form-input {
+            display: flex;
+            align-items: center;
+            height: 36px;
+        }
+        #content nav form .form-input input {
+            flex-grow: 1;
+            padding: 0 16px;
+            height: 100%;
+            border: none;
+            background: var(--grey);
+            border-radius: 36px 0 0 36px;
+            outline: none;
+            width: 100%;
+            color: var(--dark);
+        }
+        #content nav form .form-input button {
+            width: 36px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--blue);
+            color: var(--light);
+            font-size: 18px;
+            border: none;
+            outline: none;
+            border-radius: 0 36px 36px 0;
+            cursor: pointer;
+        }
+        #content nav .notification {
+            font-size: 20px;
+            position: relative;
+        }
+        #content nav .notification .num {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--light);
+            background: var(--red);
+            color: var(--light);
+            font-weight: 700;
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #content nav .profile img {
+            width: 36px;
+            height: 36px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        #content nav .switch-mode {
+            display: block;
+            min-width: 50px;
+            height: 25px;
+            border-radius: 25px;
+            background: var(--grey);
+            cursor: pointer;
+            position: relative;
+        }
+        #content nav .switch-mode::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            bottom: 2px;
+            width: calc(25px - 4px);
+            background: var(--blue);
+            border-radius: 50%;
+            transition: all .3s ease;
+        }
+        #content nav #switch-mode:checked + .switch-mode::before {
+            left: calc(100% - (25px - 4px) - 2px);
+        }
+        /* NAVBAR */
+        
+        /* MAIN */
+        #content main {
+            width: 100%;
+            padding: 36px 24px;
+            font-family: var(--poppins);
+            max-height: calc(100vh - 56px);
+            overflow-y: auto;
+        }
+        #content main .head-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            grid-gap: 16px;
+            flex-wrap: wrap;
+        }
+        #content main .head-title .left h1 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        #content main .head-title .left .breadcrumb {
+            display: flex;
+            align-items: center;
+            grid-gap: 16px;
+        }
+        #content main .head-title .left .breadcrumb li {
+            color: var(--dark);
+        }
+        #content main .head-title .left .breadcrumb li a {
+            color: var(--dark-grey);
+            pointer-events: none;
+        }
+        #content main .head-title .left .breadcrumb li a.active {
+            color: var(--blue);
+            pointer-events: unset;
+        }
+        
+        /* Settings Layout */
+        .settings-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 24px;
+            margin-top: 36px;
+        }
+        
+        @media screen and (max-width: 1024px) {
+            .settings-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .settings-sidebar {
+                display: none;
+            }
+            
+            .mobile-settings-nav {
+                display: block;
+            }
+        }
+        
+        /* Settings Sidebar */
+        .settings-sidebar {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 24px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .settings-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .settings-nav-item {
+            padding: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark);
+        }
+        
+        .settings-nav-item:hover {
+            background: var(--grey);
+        }
+        
+        .settings-nav-item.active {
+            background: var(--light-blue);
+            color: var(--blue);
+        }
+        
+        .settings-nav-item i {
+            font-size: 20px;
+            width: 24px;
+        }
+        
+        .mobile-settings-nav {
+            display: none;
+            margin-bottom: 24px;
+        }
+        
+        .mobile-settings-select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--grey);
+            background: var(--light);
+            color: var(--dark);
+            font-size: 16px;
+            outline: none;
+        }
+        
+        /* Settings Content */
+        .settings-content {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 32px;
+        }
+        
+        .settings-section {
+            display: none;
+        }
+        
+        .settings-section.active {
+            display: block;
+        }
+        
+        .section-header {
+            margin-bottom: 32px;
+        }
+        
+        .section-header h2 {
+            color: var(--dark);
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .section-header p {
+            color: var(--dark-grey);
+            font-size: 16px;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .form-label {
+            display: block;
+            color: var(--dark);
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--grey);
+            border-radius: 8px;
+            background: var(--light);
+            color: var(--dark);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--blue);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-hint {
+            color: var(--dark-grey);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+        
+        /* Switch Toggle */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--grey);
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: var(--light);
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--blue);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        /* Checkbox and Radio */
+        .checkbox-group, .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .checkbox-item, .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .checkbox-item input, .radio-item input {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .checkbox-item label, .radio-item label {
+            color: var(--dark);
+            font-size: 14px;
+        }
+        
+        /* Settings Cards */
+        .settings-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+        
+        .settings-card {
+            background: var(--grey);
+            border-radius: 12px;
+            padding: 24px;
+            transition: transform 0.3s ease;
+        }
+        
+        .settings-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .settings-card h4 {
+            color: var(--dark);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .settings-card p {
+            color: var(--dark-grey);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        
+        /* Danger Zone */
+        .danger-zone {
+            border: 2px solid var(--red);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 32px;
+        }
+        
+        .danger-zone h3 {
+            color: var(--red);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .danger-zone p {
+            color: var(--dark-grey);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--blue);
+            color: var(--light);
+        }
+        
+        .btn-primary:hover {
+            background: #2B7DCC;
+        }
+        
+        .btn-danger {
+            background: var(--red);
+            color: var(--light);
+        }
+        
+        .btn-danger:hover {
+            background: #C9433D;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--grey);
+            color: var(--dark);
+        }
+        
+        .btn-outline:hover {
+            background: var(--grey);
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--grey);
+        }
+        
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            #sidebar {
+                width: 200px;
+            }
+        
+            #content {
+                width: calc(100% - 60px);
+                left: 200px;
+            }
+        
+            #content nav .nav-link {
+                display: none;
+            }
+            
+            .settings-content {
+                padding: 24px;
+            }
+        }
+        
+        @media screen and (max-width: 576px) {
+            #content nav form .form-input input {
+                display: none;
+            }
+        
+            #content nav form .form-input button {
+                width: auto;
+                height: auto;
+                background: transparent;
+                border-radius: none;
+                color: var(--dark);
+            }
+        
+            #content nav form.show .form-input input {
+                display: block;
+                width: 100%;
+            }
+            #content nav form.show .form-input button {
+                width: 36px;
+                height: 100%;
+                border-radius: 0 36px 36px 0;
+                color: var(--light);
+                background: var(--red);
+            }
+        
+            #content nav form.show ~ .notification,
+            #content nav form.show ~ .profile {
+                display: none;
+            }
+            
+            .settings-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a href="#" class="brand">
+            <i class='bx bxs-smile'></i>
+            <span class="text">NAA-Admin</span>
+        </a>
+        <ul class="side-menu top">
+            <li>
+                <a href="dashboard.html">
+                    <i class='bx bxs-dashboard' ></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="my store dasboard.html">
+                    <i class='bx bxs-shopping-bag-alt' ></i>
+                    <span class="text">My Store</span>
+                </a>
+            </li>
+            <li>
+                <a href="analytics dashboard.html">
+                    <i class='bx bxs-doughnut-chart' ></i>
+                    <span class="text">Analytics</span>
+                </a>
+            </li>
+            <li>
+                <a href="message dashboard.html">
+                    <i class='bx bxs-message-dots' ></i>
+                    <span class="text">Message</span>
+                </a>
+            </li>
+            <li>
+                <a href="team dashboard.html">
+                    <i class='bx bxs-group' ></i>
+                    <span class="text">Team</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="side-menu">
+            <li class="active">
+                <a href="#">
+                    <i class='bx bxs-cog' ></i>
+                    <span class="text">Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="logout">
+                    <i class='bx bxs-log-out-circle' ></i>
+                    <span class="text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu' ></i>
+            <a href="#" class="nav-link">Categories</a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search settings...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="switch-mode" hidden>
+            <label for="switch-mode" class="switch-mode"></label>
+            <a href="#" class="notification">
+                <i class='bx bxs-bell' ></i>
+                <span class="num">2</span>
+            </a>
+            <a href="#" class="profile">
+                <img src="img/logo1.png">
+            </a>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+        <main>
+            <div class="head-title">
+                <div class="left">
+                    <h1>Settings</h1>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="dashboard.html">Dashboard</a>
+                        </li>
+                        <li><i class='bx bx-chevron-right' ></i></li>
+                        <li>
+                            <a class="active" href="#">Settings</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mobile-settings-nav">
+                <select class="mobile-settings-select" id="mobileSettingsNav">
+                    <option value="profile">Profile Settings</option>
+                    <option value="account">Account Settings</option>
+                    <option value="notifications">Notifications</option>
+                    <option value="security">Security</option>
+                    <option value="preferences">Preferences</option>
+                    <option value="billing">Billing & Plans</option>
+                </select>
+            </div>
+
+            <div class="settings-container">
+                <!-- Settings Sidebar -->
+                <div class="settings-sidebar">
+                    <div class="settings-nav">
+                        <div class="settings-nav-item active" data-section="profile">
+                            <i class='bx bx-user'></i>
+                            <span>Profile Settings</span>
+                        </div>
+                        <div class="settings-nav-item" data-section="account">
+                            <i class='bx bx-cog'></i>
+                            <span>Account Settings</span>
+                        </div>
+                        <div class="settings-nav-item" data-section="notifications">
+                            <i class='bx bx-bell'></i>
+                            <span>Notifications</span>
+                        </div>
+                        <div class="settings-nav-item" data-section="security">
+                            <i class='bx bx-shield'></i>
+                            <span>Security</span>
+                        </div>
+                        <div class="settings-nav-item" data-section="preferences">
+                            <i class='bx bx-palette'></i>
+                            <span>Preferences</span>
+                        </div>
+                        <div class="settings-nav-item" data-section="billing">
+                            <i class='bx bx-credit-card'></i>
+                            <span>Billing & Plans</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Content -->
+                <div class="settings-content">
+                    <!-- Profile Settings -->
+                    <div class="settings-section active" id="profile">
+                        <div class="section-header">
+                            <h2>Profile Settings</h2>
+                            <p>Manage your personal information and profile details</p>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div>
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-input" value="Nouman" placeholder="Enter your first name">
+                                </div>
+                                <div>
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-input" value="Zahoor Jatoi" placeholder="Enter your last name">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" value="nouman@naa.com" placeholder="Enter your email address">
+                            <div class="form-hint">This will be used for account notifications and login</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-input" value="+92 300 1234567" placeholder="Enter your phone number">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Bio</label>
+                            <textarea class="form-textarea" placeholder="Tell us about yourself">Team Lead & Full Stack Developer at NAA. Passionate about creating innovative web solutions and leading our talented team to success.</textarea>
+                            <div class="form-hint">Brief description for your profile</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Profile Photo</label>
+                            <div style="display: flex; align-items: center; gap: 16px;">
+                                <img src="img/people/1.png" alt="Profile" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;">
+                                <div>
+                                    <button class="btn btn-outline" onclick="showNotification('Photo upload feature coming soon')">
+                                        <i class='bx bx-upload'></i>
+                                        Upload New Photo
+                                    </button>
+                                    <div class="form-hint">JPG, PNG or GIF, max 2MB</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn btn-primary" onclick="showNotification('Profile updated successfully')">
+                                <i class='bx bx-save'></i>
+                                Save Changes
+                            </button>
+                            <button class="btn btn-outline" onclick="resetForm('profile')">
+                                <i class='bx bx-reset'></i>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Account Settings -->
+                    <div class="settings-section" id="account">
+                        <div class="section-header">
+                            <h2>Account Settings</h2>
+                            <p>Manage your account preferences and settings</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-input" value="noumanjatoi" placeholder="Enter your username">
+                            <div class="form-hint">This will be your public display name</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Language</label>
+                            <select class="form-select">
+                                <option>English</option>
+                                <option>Urdu</option>
+                                <option>Arabic</option>
+                                <option>Spanish</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Time Zone</label>
+                            <select class="form-select">
+                                <option>Pakistan Standard Time (UTC+5)</option>
+                                <option>GMT (UTC+0)</option>
+                                <option>EST (UTC-5)</option>
+                                <option>PST (UTC-8)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Date Format</label>
+                            <select class="form-select">
+                                <option>DD/MM/YYYY</option>
+                                <option>MM/DD/YYYY</option>
+                                <option>YYYY-MM-DD</option>
+                            </select>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn btn-primary" onclick="showNotification('Account settings updated')">
+                                <i class='bx bx-save'></i>
+                                Save Changes
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Notifications -->
+                    <div class="settings-section" id="notifications">
+                        <div class="section-header">
+                            <h2>Notification Settings</h2>
+                            <p>Choose how and when you want to be notified</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label style="display: flex; justify-content: between; align-items: center;">
+                                <span class="form-label">Email Notifications</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </label>
+                            <div class="form-hint">Receive notifications via email</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label style="display: flex; justify-content: between; align-items: center;">
+                                <span class="form-label">Push Notifications</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </label>
+                            <div class="form-hint">Receive push notifications in your browser</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label style="display: flex; justify-content: between; align-items: center;">
+                                <span class="form-label">SMS Notifications</span>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </label>
+                            <div class="form-hint">Receive notifications via SMS</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Notification Types</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="notif1" checked>
+                                    <label for="notif1">New orders and sales</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="notif2" checked>
+                                    <label for="notif2">Customer messages</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="notif3">
+                                    <label for="notif3">Product reviews</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="notif4" checked>
+                                    <label for="notif4">System updates</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn btn-primary" onclick="showNotification('Notification preferences saved')">
+                                <i class='bx bx-save'></i>
+                                Save Preferences
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Security -->
+                    <div class="settings-section" id="security">
+                        <div class="section-header">
+                            <h2>Security Settings</h2>
+                            <p>Manage your account security and privacy</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Current Password</label>
+                            <input type="password" class="form-input" placeholder="Enter current password">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">New Password</label>
+                            <input type="password" class="form-input" placeholder="Enter new password">
+                            <div class="form-hint">Minimum 8 characters with letters and numbers</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-input" placeholder="Confirm new password">
+                        </div>
+
+                        <div class="form-group">
+                            <label style="display: flex; justify-content: between; align-items: center;">
+                                <span class="form-label">Two-Factor Authentication</span>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </label>
+                            <div class="form-hint">Add an extra layer of security to your account</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label style="display: flex; justify-content: between; align-items: center;">
+                                <span class="form-label">Login Alerts</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </label>
+                            <div class="form-hint">Get notified of new sign-ins from unknown devices</div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn btn-primary" onclick="showNotification('Security settings updated')">
+                                <i class='bx bx-save'></i>
+                                Update Security
+                            </button>
+                        </div>
+
+                        <div class="danger-zone">
+                            <h3><i class='bx bx-error'></i> Danger Zone</h3>
+                            <p>Once you delete your account, there is no going back. Please be certain.</p>
+                            <button class="btn btn-danger" onclick="showNotification('Account deletion feature coming soon')">
+                                <i class='bx bx-trash'></i>
+                                Delete Account
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Preferences -->
+                    <div class="settings-section" id="preferences">
+                        <div class="section-header">
+                            <h2>Preferences</h2>
+                            <p>Customize your dashboard experience</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Theme</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="theme-light" name="theme" checked>
+                                    <label for="theme-light">Light Mode</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="theme-dark" name="theme">
+                                    <label for="theme-dark">Dark Mode</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="theme-auto" name="theme">
+                                    <label for="theme-auto">Auto (System Preference)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Sidebar Style</label>
+                            <select class="form-select">
+                                <option>Expanded</option>
+                                <option>Collapsed</option>
+                                <option>Auto Hide</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Dashboard Density</label>
+                            <select class="form-select">
+                                <option>Comfortable</option>
+                                <option>Compact</option>
+                                <option>Spacious</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label style="display: flex; justify-content: between; align-items: center;">
+                                <span class="form-label">Auto-save Forms</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </label>
+                            <div class="form-hint">Automatically save form data as you type</div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn btn-primary" onclick="showNotification('Preferences saved successfully')">
+                                <i class='bx bx-save'></i>
+                                Save Preferences
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Billing & Plans -->
+                    <div class="settings-section" id="billing">
+                        <div class="section-header">
+                            <h2>Billing & Plans</h2>
+                            <p>Manage your subscription and billing information</p>
+                        </div>
+
+                        <div class="settings-cards">
+                            <div class="settings-card">
+                                <h4>Current Plan</h4>
+                                <p>Pro Plan - $29/month</p>
+                                <button class="btn btn-outline" onclick="showNotification('Plan change feature coming soon')">
+                                    Change Plan
+                                </button>
+                            </div>
+                            <div class="settings-card">
+                                <h4>Billing Cycle</h4>
+                                <p>Monthly - Next billing: Dec 29, 2024</p>
+                                <button class="btn btn-outline" onclick="showNotification('Billing cycle change feature coming soon')">
+                                    Change Cycle
+                                </button>
+                            </div>
+                            <div class="settings-card">
+                                <h4>Payment Method</h4>
+                                <p>Visa ending in 4242</p>
+                                <button class="btn btn-outline" onclick="showNotification('Payment method update feature coming soon')">
+                                    Update Payment
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Billing Address</label>
+                            <input type="text" class="form-input" placeholder="Street Address">
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div>
+                                    <label class="form-label">City</label>
+                                    <input type="text" class="form-input" placeholder="City">
+                                </div>
+                                <div>
+                                    <label class="form-label">ZIP Code</label>
+                                    <input type="text" class="form-input" placeholder="ZIP Code">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn btn-primary" onclick="showNotification('Billing information updated')">
+                                <i class='bx bx-save'></i>
+                                Update Billing
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- MAIN -->
+    </section>
+    <!-- CONTENT -->
+    
+    <script>
+        // Initialize the settings page
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+        });
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Settings navigation
+            const navItems = document.querySelectorAll('.settings-nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    navItems.forEach(i => i.classList.remove('active'));
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    const sectionId = this.getAttribute('data-section');
+                    showSection(sectionId);
+                    
+                    // Update mobile select
+                    document.getElementById('mobileSettingsNav').value = sectionId;
+                });
+            });
+
+            // Mobile settings navigation
+            const mobileNav = document.getElementById('mobileSettingsNav');
+            mobileNav.addEventListener('change', function() {
+                showSection(this.value);
+                
+                // Update sidebar active item
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('data-section') === this.value) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+
+            // Settings search
+            const settingsSearch = document.querySelector('#content nav form .form-input input');
+            settingsSearch.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const sections = document.querySelectorAll('.settings-section');
+                
+                sections.forEach(section => {
+                    const sectionText = section.textContent.toLowerCase();
+                    if (sectionText.includes(searchTerm)) {
+                        section.style.display = 'block';
+                        // Show the section if it matches search
+                        if (!section.classList.contains('active')) {
+                            showSection(section.id);
+                        }
+                    }
+                });
+            });
+
+            // Theme radio buttons
+            const themeRadios = document.querySelectorAll('input[name="theme"]');
+            themeRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.id === 'theme-dark') {
+                        document.body.classList.add('dark');
+                        document.getElementById('switch-mode').checked = true;
+                    } else if (this.id === 'theme-light') {
+                        document.body.classList.remove('dark');
+                        document.getElementById('switch-mode').checked = false;
+                    } else if (this.id === 'theme-auto') {
+                        // Auto theme based on system preference
+                        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                            document.body.classList.add('dark');
+                            document.getElementById('switch-mode').checked = true;
+                        } else {
+                            document.body.classList.remove('dark');
+                            document.getElementById('switch-mode').checked = false;
+                        }
+                    }
+                    showNotification('Theme preference saved');
+                });
+            });
+        }
+
+        // Show specific settings section
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.settings-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
+        }
+
+        // Reset form
+        function resetForm(sectionId) {
+            const form = document.getElementById(sectionId);
+            const inputs = form.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                if (input.type === 'checkbox' || input.type === 'radio') {
+                    // Don't reset checkboxes and radios
+                    return;
+                }
+                input.value = '';
+            });
+            showNotification('Form reset');
+        }
+
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--blue);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 20px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                z-index: 10000;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Original sidebar functionality
+        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+
+        allSideMenu.forEach(item=> {
+            const li = item.parentElement;
+        
+            item.addEventListener('click', function () {
+                allSideMenu.forEach(i=> {
+                    i.parentElement.classList.remove('active');
+                })
+                li.classList.add('active');
+            })
+        });
+        
+        // TOGGLE SIDEBAR
+        const menuBar = document.querySelector('#content nav .bx.bx-menu');
+        const sidebar = document.getElementById('sidebar');
+        
+        menuBar.addEventListener('click', function () {
+            sidebar.classList.toggle('hide');
+        })
+        
+        const searchButton = document.querySelector('#content nav form .form-input button');
+        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+        const searchForm = document.querySelector('#content nav form');
+        
+        searchButton.addEventListener('click', function (e) {
+            if(window.innerWidth < 576) {
+                e.preventDefault();
+                searchForm.classList.toggle('show');
+                if(searchForm.classList.contains('show')) {
+                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
+                } else {
+                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                }
+            }
+        })
+        
+        if(window.innerWidth < 768) {
+            sidebar.classList.add('hide');
+        } else if(window.innerWidth > 576) {
+            searchButtonIcon.classList.replace('bx-x', 'bx-search');
+            searchForm.classList.remove('show');
+        }
+        
+        window.addEventListener('resize', function () {
+            if(this.innerWidth > 576) {
+                searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                searchForm.classList.remove('show');
+            }
+        })
+        
+        const switchMode = document.getElementById('switch-mode');
+        
+        switchMode.addEventListener('change', function () {
+            if(this.checked) {
+                document.body.classList.add('dark');
+                document.getElementById('theme-dark').checked = true;
+            } else {
+                document.body.classList.remove('dark');
+                document.getElementById('theme-light').checked = true;
+            }
+        })
+        
+        // Logout functionality
+        const logoutLinks = document.querySelectorAll('a.logout');
+
+        logoutLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // In a real app, you would clear user session data
+                localStorage.removeItem('currentUser');
+                
+                // Redirect to login page
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body>
+</html>

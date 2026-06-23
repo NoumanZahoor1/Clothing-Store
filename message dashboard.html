@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <title>Messages - NAA-Admin</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        li {
+            list-style: none;
+        }
+        
+        :root {
+            --poppins: 'Poppins', sans-serif;
+            --lato: 'Lato', sans-serif;
+        
+            --light: #F9F9F9;
+            --blue: #3C91E6;
+            --light-blue: #CFE8FF;
+            --grey: #eee;
+            --dark-grey: #AAAAAA;
+            --dark: #342E37;
+            --red: #DB504A;
+            --yellow: #FFCE26;
+            --light-yellow: #FFF2C6;
+            --orange: #FD7238;
+            --light-orange: #FFE0D3;
+        }
+        
+        html {
+            overflow-x: hidden;
+        }
+        
+        body.dark {
+            --light: #0C0C1E;
+            --grey: #060714;
+            --dark: #FBFBFB;
+        }
+        
+        body {
+            background: var(--grey);
+            overflow-x: hidden;
+        }
+        
+        /* SIDEBAR */
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100%;
+            background: var(--light);
+            z-index: 2000;
+            font-family: var(--lato);
+            transition: .3s ease;
+            overflow-x: hidden;
+            scrollbar-width: none;
+        }
+        #sidebar::--webkit-scrollbar {
+            display: none;
+        }
+        #sidebar.hide {
+            width: 60px;
+        }
+        #sidebar .brand {
+            font-size: 24px;
+            font-weight: 700;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            color: var(--blue);
+            position: sticky;
+            top: 0;
+            left: 0;
+            background: var(--light);
+            z-index: 500;
+            padding-bottom: 20px;
+            box-sizing: content-box;
+        }
+        #sidebar .brand .bx {
+            min-width: 60px;
+            display: flex;
+            justify-content: center;
+        }
+        #sidebar .side-menu {
+            width: 100%;
+            margin-top: 48px;
+        }
+        #sidebar .side-menu li {
+            height: 48px;
+            background: transparent;
+            margin-left: 6px;
+            border-radius: 48px 0 0 48px;
+            padding: 4px;
+        }
+        #sidebar .side-menu li.active {
+            background: var(--grey);
+            position: relative;
+        }
+        #sidebar .side-menu li.active::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            top: -40px;
+            right: 0;
+            box-shadow: 20px 20px 0 var(--grey);
+            z-index: -1;
+        }
+        #sidebar .side-menu li.active::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            bottom: -40px;
+            right: 0;
+            box-shadow: 20px -20px 0 var(--grey);
+            z-index: -1;
+        }
+        #sidebar .side-menu li a {
+            width: 100%;
+            height: 100%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            border-radius: 48px;
+            font-size: 16px;
+            color: var(--dark);
+            white-space: nowrap;
+            overflow-x: hidden;
+        }
+        #sidebar .side-menu.top li.active a {
+            color: var(--blue);
+        }
+        #sidebar.hide .side-menu li a {
+            width: calc(48px - (4px * 2));
+            transition: width .3s ease;
+        }
+        #sidebar .side-menu li a.logout {
+            color: var(--red);
+        }
+        #sidebar .side-menu.top li a:hover {
+            color: var(--blue);
+        }
+        #sidebar .side-menu li a .bx {
+            min-width: calc(60px  - ((4px + 6px) * 2));
+            display: flex;
+            justify-content: center;
+        }
+        /* SIDEBAR */
+        
+        /* CONTENT */
+        #content {
+            position: relative;
+            width: calc(100% - 280px);
+            left: 280px;
+            transition: .3s ease;
+        }
+        #sidebar.hide ~ #content {
+            width: calc(100% - 60px);
+            left: 60px;
+        }
+        
+        /* NAVBAR */
+        #content nav {
+            height: 56px;
+            background: var(--light);
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            grid-gap: 24px;
+            font-family: var(--lato);
+            position: sticky;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        #content nav::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            bottom: -40px;
+            left: 0;
+            border-radius: 50%;
+            box-shadow: -20px -20px 0 var(--light);
+        }
+        #content nav a {
+            color: var(--dark);
+        }
+        #content nav .bx.bx-menu {
+            cursor: pointer;
+            color: var(--dark);
+        }
+        #content nav .nav-link {
+            font-size: 16px;
+            transition: .3s ease;
+        }
+        #content nav .nav-link:hover {
+            color: var(--blue);
+        }
+        #content nav form {
+            max-width: 400px;
+            width: 100%;
+            margin-right: auto;
+        }
+        #content nav form .form-input {
+            display: flex;
+            align-items: center;
+            height: 36px;
+        }
+        #content nav form .form-input input {
+            flex-grow: 1;
+            padding: 0 16px;
+            height: 100%;
+            border: none;
+            background: var(--grey);
+            border-radius: 36px 0 0 36px;
+            outline: none;
+            width: 100%;
+            color: var(--dark);
+        }
+        #content nav form .form-input button {
+            width: 36px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--blue);
+            color: var(--light);
+            font-size: 18px;
+            border: none;
+            outline: none;
+            border-radius: 0 36px 36px 0;
+            cursor: pointer;
+        }
+        #content nav .notification {
+            font-size: 20px;
+            position: relative;
+        }
+        #content nav .notification .num {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--light);
+            background: var(--red);
+            color: var(--light);
+            font-weight: 700;
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #content nav .profile img {
+            width: 36px;
+            height: 36px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        #content nav .switch-mode {
+            display: block;
+            min-width: 50px;
+            height: 25px;
+            border-radius: 25px;
+            background: var(--grey);
+            cursor: pointer;
+            position: relative;
+        }
+        #content nav .switch-mode::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            bottom: 2px;
+            width: calc(25px - 4px);
+            background: var(--blue);
+            border-radius: 50%;
+            transition: all .3s ease;
+        }
+        #content nav #switch-mode:checked + .switch-mode::before {
+            left: calc(100% - (25px - 4px) - 2px);
+        }
+        /* NAVBAR */
+        
+        /* MAIN */
+        #content main {
+            width: 100%;
+            padding: 36px 24px;
+            font-family: var(--poppins);
+            max-height: calc(100vh - 56px);
+            overflow-y: auto;
+        }
+        #content main .head-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            grid-gap: 16px;
+            flex-wrap: wrap;
+        }
+        #content main .head-title .left h1 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        #content main .head-title .left .breadcrumb {
+            display: flex;
+            align-items: center;
+            grid-gap: 16px;
+        }
+        #content main .head-title .left .breadcrumb li {
+            color: var(--dark);
+        }
+        #content main .head-title .left .breadcrumb li a {
+            color: var(--dark-grey);
+            pointer-events: none;
+        }
+        #content main .head-title .left .breadcrumb li a.active {
+            color: var(--blue);
+            pointer-events: unset;
+        }
+        #content main .head-title .btn-download {
+            height: 36px;
+            padding: 0 16px;
+            border-radius: 36px;
+            background: var(--blue);
+            color: var(--light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            grid-gap: 10px;
+            font-weight: 500;
+        }
+        
+        /* Messages Layout */
+        .messages-container {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 24px;
+            margin-top: 36px;
+            height: calc(100vh - 200px);
+        }
+        
+        @media screen and (max-width: 1024px) {
+            .messages-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .conversation-list {
+                display: none;
+            }
+            
+            .conversation-list.active {
+                display: block;
+            }
+            
+            .message-area {
+                display: none;
+            }
+            
+            .message-area.active {
+                display: block;
+            }
+        }
+        
+        /* Conversation List */
+        .conversation-list {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .conversation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .conversation-header h3 {
+            color: var(--dark);
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .new-conversation-btn {
+            background: var(--blue);
+            color: var(--light);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        .conversation-search {
+            margin-bottom: 24px;
+        }
+        
+        .conversation-search .form-input {
+            display: flex;
+            align-items: center;
+            height: 36px;
+        }
+        
+        .conversation-search .form-input input {
+            flex-grow: 1;
+            padding: 0 16px;
+            height: 100%;
+            border: none;
+            background: var(--grey);
+            border-radius: 36px;
+            outline: none;
+            width: 100%;
+            color: var(--dark);
+        }
+        
+        .conversations {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        
+        .conversation-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-bottom: 8px;
+        }
+        
+        .conversation-item:hover {
+            background: var(--grey);
+        }
+        
+        .conversation-item.active {
+            background: var(--light-blue);
+        }
+        
+        .conversation-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 16px;
+        }
+        
+        .conversation-info {
+            flex-grow: 1;
+        }
+        
+        .conversation-info h4 {
+            color: var(--dark);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .conversation-preview {
+            color: var(--dark-grey);
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+        
+        .conversation-meta {
+            text-align: right;
+        }
+        
+        .conversation-time {
+            color: var(--dark-grey);
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+        
+        .conversation-badge {
+            background: var(--blue);
+            color: var(--light);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            margin-left: auto;
+        }
+        
+        /* Message Area */
+        .message-area {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--grey);
+            margin-bottom: 24px;
+        }
+        
+        .message-user {
+            display: flex;
+            align-items: center;
+        }
+        
+        .message-user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 16px;
+        }
+        
+        .message-user-info h4 {
+            color: var(--dark);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .message-user-info p {
+            color: var(--dark-grey);
+            font-size: 14px;
+        }
+        
+        .message-actions {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .message-action-btn {
+            background: none;
+            border: none;
+            color: var(--dark-grey);
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .message-action-btn:hover {
+            color: var(--blue);
+        }
+        
+        .messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 16px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .message {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            position: relative;
+        }
+        
+        .message.received {
+            align-self: flex-start;
+            background: var(--grey);
+            color: var(--dark);
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message.sent {
+            align-self: flex-end;
+            background: var(--blue);
+            color: var(--light);
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message-time {
+            font-size: 12px;
+            color: var(--dark-grey);
+            margin-top: 4px;
+            text-align: right;
+        }
+        
+        .message.sent .message-time {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .message-input {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--grey);
+        }
+        
+        .message-input .form-input {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            height: 48px;
+        }
+        
+        .message-input .form-input input {
+            flex-grow: 1;
+            padding: 0 16px;
+            height: 100%;
+            border: none;
+            background: var(--grey);
+            border-radius: 24px;
+            outline: none;
+            width: 100%;
+            color: var(--dark);
+        }
+        
+        .message-send-btn {
+            background: var(--blue);
+            color: var(--light);
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        .attachment-btn {
+            background: none;
+            border: none;
+            color: var(--dark-grey);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: var(--blue);
+            color: var(--light);
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+        
+        @media screen and (max-width: 1024px) {
+            .mobile-toggle {
+                display: block;
+            }
+        }
+        
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            #sidebar {
+                width: 200px;
+            }
+        
+            #content {
+                width: calc(100% - 60px);
+                left: 200px;
+            }
+        
+            #content nav .nav-link {
+                display: none;
+            }
+            
+            .message {
+                max-width: 85%;
+            }
+        }
+        
+        @media screen and (max-width: 576px) {
+            #content nav form .form-input input {
+                display: none;
+            }
+        
+            #content nav form .form-input button {
+                width: auto;
+                height: auto;
+                background: transparent;
+                border-radius: none;
+                color: var(--dark);
+            }
+        
+            #content nav form.show .form-input input {
+                display: block;
+                width: 100%;
+            }
+            #content nav form.show .form-input button {
+                width: 36px;
+                height: 100%;
+                border-radius: 0 36px 36px 0;
+                color: var(--light);
+                background: var(--red);
+            }
+        
+            #content nav form.show ~ .notification,
+            #content nav form.show ~ .profile {
+                display: none;
+            }
+            
+            .conversation-list,
+            .message-area {
+                padding: 16px;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a href="#" class="brand">
+            <i class='bx bxs-smile'></i>
+            <span class="text">NAA-Admin</span>
+        </a>
+        <ul class="side-menu top">
+            <li>
+                <a href="dashboard.html">
+                    <i class='bx bxs-dashboard' ></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="my store dasboard.html">
+                    <i class='bx bxs-shopping-bag-alt' ></i>
+                    <span class="text">My Store</span>
+                </a>
+            </li>
+            <li>
+                <a href="analytics dashboard.html">
+                    <i class='bx bxs-doughnut-chart' ></i>
+                    <span class="text">Analytics</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="#">
+                    <i class='bx bxs-message-dots' ></i>
+                    <span class="text">Message</span>
+                </a>
+            </li>
+            <li>
+                <a href="team dashboard.html">
+                    <i class='bx bxs-group' ></i>
+                    <span class="text">Team</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a href="setting dashboard.html">
+                    <i class='bx bxs-cog' ></i>
+                    <span class="text">Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="logout">
+                    <i class='bx bxs-log-out-circle' ></i>
+                    <span class="text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu' ></i>
+            <a href="#" class="nav-link">Categories</a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search messages...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="switch-mode" hidden>
+            <label for="switch-mode" class="switch-mode"></label>
+            <a href="#" class="notification">
+                <i class='bx bxs-bell' ></i>
+                <span class="num">12</span>
+            </a>
+            <a href="#" class="profile">
+                <img src="img/logo1.png">
+            </a>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+        <main>
+            <div class="head-title">
+                <div class="left">
+                    <h1>Messages</h1>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="dashboard.html">Dashboard</a>
+                        </li>
+                        <li><i class='bx bx-chevron-right' ></i></li>
+                        <li>
+                            <a class="active" href="#">Messages</a>
+                        </li>
+                    </ul>
+                </div>
+                <a href="#" class="btn-download">
+                    <i class='bx bxs-cloud-download' ></i>
+                    <span class="text">Export Chats</span>
+                </a>
+            </div>
+
+            <button class="mobile-toggle" id="conversationToggle">
+                <i class='bx bx-conversation'></i>
+                Show Conversations
+            </button>
+
+            <div class="messages-container">
+                <!-- Conversation List -->
+                <div class="conversation-list active" id="conversationList">
+                    <div class="conversation-header">
+                        <h3>Conversations</h3>
+                        <button class="new-conversation-btn" onclick="showNotification('New conversation feature coming soon')">
+                            <i class='bx bx-plus'></i>
+                        </button>
+                    </div>
+                    
+                    <div class="conversation-search">
+                        <div class="form-input">
+                            <input type="text" placeholder="Search conversations...">
+                        </div>
+                    </div>
+                    
+                    <div class="conversations">
+                        <div class="conversation-item active" data-user="sarah">
+                            <img src="https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8d29tZW58ZW58MHx8MHx8fDA%3D" alt="Sarah Johnson" class="conversation-avatar">
+                            <div class="conversation-info">
+                                <h4>Sarah Johnson</h4>
+                                <p class="conversation-preview">Thanks for the quick response! I'll place the order today.</p>
+                            </div>
+                            <div class="conversation-meta">
+                                <div class="conversation-time">10:24 AM</div>
+                                <div class="conversation-badge">3</div>
+                            </div>
+                        </div>
+                        
+                        <div class="conversation-item" data-user="mike">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" alt="Mike Chen" class="conversation-avatar">
+                            <div class="conversation-info">
+                                <h4>Mike Chen</h4>
+                                <p class="conversation-preview">When will my order be shipped?</p>
+                            </div>
+                            <div class="conversation-meta">
+                                <div class="conversation-time">Yesterday</div>
+                            </div>
+                        </div>
+                        
+                        <div class="conversation-item" data-user="emma">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" alt="Emma Wilson" class="conversation-avatar">
+                            <div class="conversation-info">
+                                <h4>Emma Wilson</h4>
+                                <p class="conversation-preview">I have a question about the return policy</p>
+                            </div>
+                            <div class="conversation-meta">
+                                <div class="conversation-time">Yesterday</div>
+                                <div class="conversation-badge">1</div>
+                            </div>
+                        </div>
+                        
+                        <div class="conversation-item" data-user="david">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" alt="David Brown" class="conversation-avatar">
+                            <div class="conversation-info">
+                                <h4>David Brown</h4>
+                                <p class="conversation-preview">The product quality is excellent!</p>
+                            </div>
+                            <div class="conversation-meta">
+                                <div class="conversation-time">Oct 12</div>
+                            </div>
+                        </div>
+                        
+                        <div class="conversation-item" data-user="lisa">
+                            <img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" alt="Lisa Rodriguez" class="conversation-avatar">
+                            <div class="conversation-info">
+                                <h4>Lisa Rodriguez</h4>
+                                <p class="conversation-preview">Do you have this in different colors?</p>
+                            </div>
+                            <div class="conversation-meta">
+                                <div class="conversation-time">Oct 10</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Message Area -->
+                <div class="message-area active" id="messageArea">
+                    <div class="message-header">
+                        <div class="message-user">
+                            <img src="https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8d29tZW58ZW58MHx8MHx8fDA%3D" alt="Sarah Johnson" class="message-user-avatar">
+                            <div class="message-user-info">
+                                <h4>Sarah Johnson</h4>
+                                <p>Online - Last seen 10:30 AM</p>
+                            </div>
+                        </div>
+                        <div class="message-actions">
+                            <button class="message-action-btn" onclick="showNotification('Call feature coming soon')">
+                                <i class='bx bx-phone'></i>
+                            </button>
+                            <button class="message-action-btn" onclick="showNotification('Video call feature coming soon')">
+                                <i class='bx bx-video'></i>
+                            </button>
+                            <button class="message-action-btn" onclick="showNotification('More options coming soon')">
+                                <i class='bx bx-dots-vertical-rounded'></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="messages" id="messagesContainer">
+                        <div class="message received">
+                            <p>Hello! I'm interested in the premium T-shirt. Do you have it in size medium?</p>
+                            <div class="message-time">10:15 AM</div>
+                        </div>
+                        
+                        <div class="message sent">
+                            <p>Hi Sarah! Yes, we have the premium T-shirt in medium size. It's currently in stock.</p>
+                            <div class="message-time">10:18 AM</div>
+                        </div>
+                        
+                        <div class="message received">
+                            <p>That's great! What colors are available?</p>
+                            <div class="message-time">10:20 AM</div>
+                        </div>
+                        
+                        <div class="message sent">
+                            <p>We have it in black, white, navy blue, and forest green.</p>
+                            <div class="message-time">10:21 AM</div>
+                        </div>
+                        
+                        <div class="message received">
+                            <p>Perfect! I'll take the forest green one. Thanks for the quick response!</p>
+                            <div class="message-time">10:24 AM</div>
+                        </div>
+                    </div>
+                    
+                    <div class="message-input">
+                        <button class="attachment-btn" onclick="showNotification('Attachment feature coming soon')">
+                            <i class='bx bx-paperclip'></i>
+                        </button>
+                        <div class="form-input">
+                            <input type="text" placeholder="Type a message..." id="messageInput">
+                        </div>
+                        <button class="message-send-btn" onclick="sendMessage()">
+                            <i class='bx bx-send'></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- MAIN -->
+    </section>
+    <!-- CONTENT -->
+    
+    <script>
+        // Sample conversation data
+        const conversations = {
+            sarah: {
+                name: "Sarah Johnson",
+                avatar: "https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8d29tZW58ZW58MHx8MHx8fDA%3D",
+                status: "Online - Last seen 10:30 AM",
+                messages: [
+                    { text: "Hello! I'm interested in the premium T-shirt. Do you have it in size medium?", time: "10:15 AM", type: "received" },
+                    { text: "Hi Sarah! Yes, we have the premium T-shirt in medium size. It's currently in stock.", time: "10:18 AM", type: "sent" },
+                    { text: "That's great! What colors are available?", time: "10:20 AM", type: "received" },
+                    { text: "We have it in black, white, navy blue, and forest green.", time: "10:21 AM", type: "sent" },
+                    { text: "Perfect! I'll take the forest green one. Thanks for the quick response!", time: "10:24 AM", type: "received" }
+                ]
+            },
+            mike: {
+                name: "Mike Chen",
+                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80",
+                status: "Online - Last seen 9:45 AM",
+                messages: [
+                    { text: "Hi, when will my order #ORD-7842 be shipped?", time: "Yesterday", type: "received" }
+                ]
+            },
+            emma: {
+                name: "Emma Wilson",
+                avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80",
+                status: "Offline - Last seen yesterday",
+                messages: [
+                    { text: "Hello, I have a question about your return policy.", time: "Yesterday", type: "received" }
+                ]
+            }
+        };
+
+        // Initialize the messages page
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            loadConversation('sarah');
+        });
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Conversation item clicks
+            const conversationItems = document.querySelectorAll('.conversation-item');
+            conversationItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    conversationItems.forEach(i => i.classList.remove('active'));
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    const userId = this.getAttribute('data-user');
+                    loadConversation(userId);
+                    
+                    // On mobile, switch to message view
+                    if (window.innerWidth <= 1024) {
+                        document.getElementById('conversationList').classList.remove('active');
+                        document.getElementById('messageArea').classList.add('active');
+                    }
+                });
+            });
+
+            // Mobile toggle
+            const conversationToggle = document.getElementById('conversationToggle');
+            conversationToggle.addEventListener('click', function() {
+                const conversationList = document.getElementById('conversationList');
+                const messageArea = document.getElementById('messageArea');
+                
+                if (conversationList.classList.contains('active')) {
+                    conversationList.classList.remove('active');
+                    messageArea.classList.add('active');
+                    this.innerHTML = '<i class="bx bx-conversation"></i> Show Conversations';
+                } else {
+                    conversationList.classList.add('active');
+                    messageArea.classList.remove('active');
+                    this.innerHTML = '<i class="bx bx-message"></i> Show Messages';
+                }
+            });
+
+            // Message input enter key
+            const messageInput = document.getElementById('messageInput');
+            messageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Conversation search
+            const conversationSearch = document.querySelector('.conversation-search input');
+            conversationSearch.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const conversationItems = document.querySelectorAll('.conversation-item');
+                
+                conversationItems.forEach(item => {
+                    const userName = item.querySelector('h4').textContent.toLowerCase();
+                    if (userName.includes(searchTerm)) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Load conversation
+        function loadConversation(userId) {
+            const conversation = conversations[userId];
+            if (!conversation) return;
+            
+            // Update message header
+            const messageHeader = document.querySelector('.message-user');
+            messageHeader.querySelector('.message-user-avatar').src = conversation.avatar;
+            messageHeader.querySelector('h4').textContent = conversation.name;
+            messageHeader.querySelector('p').textContent = conversation.status;
+            
+            // Load messages
+            const messagesContainer = document.getElementById('messagesContainer');
+            messagesContainer.innerHTML = '';
+            
+            conversation.messages.forEach(msg => {
+                const messageElement = document.createElement('div');
+                messageElement.className = `message ${msg.type}`;
+                messageElement.innerHTML = `
+                    <p>${msg.text}</p>
+                    <div class="message-time">${msg.time}</div>
+                `;
+                messagesContainer.appendChild(messageElement);
+            });
+            
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // Clear unread badge
+            const activeItem = document.querySelector(`.conversation-item[data-user="${userId}"]`);
+            const badge = activeItem.querySelector('.conversation-badge');
+            if (badge) {
+                badge.remove();
+            }
+        }
+
+        // Send message
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const messageText = messageInput.value.trim();
+            
+            if (messageText === '') return;
+            
+            const messagesContainer = document.getElementById('messagesContainer');
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            // Create new message element
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message sent';
+            messageElement.innerHTML = `
+                <p>${messageText}</p>
+                <div class="message-time">${timeString}</div>
+            `;
+            messagesContainer.appendChild(messageElement);
+            
+            // Clear input
+            messageInput.value = '';
+            
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // Simulate reply after 1-2 seconds
+            setTimeout(() => {
+                const replies = [
+                    "Thanks for your message!",
+                    "I'll get back to you shortly.",
+                    "Is there anything else I can help with?",
+                    "We appreciate your business!"
+                ];
+                const randomReply = replies[Math.floor(Math.random() * replies.length)];
+                
+                const replyElement = document.createElement('div');
+                replyElement.className = 'message received';
+                replyElement.innerHTML = `
+                    <p>${randomReply}</p>
+                    <div class="message-time">${timeString}</div>
+                `;
+                messagesContainer.appendChild(replyElement);
+                
+                // Scroll to bottom
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 1000 + Math.random() * 1000);
+        }
+
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--blue);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 20px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                z-index: 10000;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Original sidebar functionality
+        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+
+        allSideMenu.forEach(item=> {
+            const li = item.parentElement;
+        
+            item.addEventListener('click', function () {
+                allSideMenu.forEach(i=> {
+                    i.parentElement.classList.remove('active');
+                })
+                li.classList.add('active');
+            })
+        });
+        
+        // TOGGLE SIDEBAR
+        const menuBar = document.querySelector('#content nav .bx.bx-menu');
+        const sidebar = document.getElementById('sidebar');
+        
+        menuBar.addEventListener('click', function () {
+            sidebar.classList.toggle('hide');
+        })
+        
+        const searchButton = document.querySelector('#content nav form .form-input button');
+        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+        const searchForm = document.querySelector('#content nav form');
+        
+        searchButton.addEventListener('click', function (e) {
+            if(window.innerWidth < 576) {
+                e.preventDefault();
+                searchForm.classList.toggle('show');
+                if(searchForm.classList.contains('show')) {
+                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
+                } else {
+                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                }
+            }
+        })
+        
+        if(window.innerWidth < 768) {
+            sidebar.classList.add('hide');
+        } else if(window.innerWidth > 576) {
+            searchButtonIcon.classList.replace('bx-x', 'bx-search');
+            searchForm.classList.remove('show');
+        }
+        
+        window.addEventListener('resize', function () {
+            if(this.innerWidth > 576) {
+                searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                searchForm.classList.remove('show');
+            }
+        })
+        
+        const switchMode = document.getElementById('switch-mode');
+        
+        switchMode.addEventListener('change', function () {
+            if(this.checked) {
+                document.body.classList.add('dark');
+            } else {
+                document.body.classList.remove('dark');
+            }
+        })
+        
+        // Logout functionality
+        const logoutLinks = document.querySelectorAll('a.logout');
+
+        logoutLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // In a real app, you would clear user session data
+                localStorage.removeItem('currentUser');
+                
+                // Redirect to login page
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body>
+</html>

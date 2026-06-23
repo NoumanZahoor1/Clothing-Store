@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAA - Ecommerce Website</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <script src="script.js"></script>
+    <section id="header">
+        <a href="#"><img height="100px" src="img/logo1.png" class="logo" alt=""></a>
+        <div>
+            <ul id="navbar">
+                <li><a href="index.html">Home</a></li>
+                <li><a class="active" href="shop.html">Shop</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li id="lg-bag">
+                    <a href="cart.html">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span class="cart-count" style="display: none;">0</span>
+                    </a>
+                </li>
+                <a href="#" id="close"><i class="fa fa-times"></i></a>
+            </ul>
+        </div>
+        <div id="mobile">
+            <a href="cart.html">
+                <i class="fa fa-shopping-cart"></i>
+                <span class="cart-count" style="display: none;">0</span>
+            </a>
+            <i id="bar" class="fas fa-outdent"></i>
+        </div>
+    </section>
+
+    <section id="page-header">
+        <h2>#Shop Collection</h2>
+        <p>Save More With Coupons & Up to 70% Off!</p>
+    </section>
+
+    <!-- New Shop Controls Section -->
+    <section id="shop-controls" class="section-p1">
+        <div class="controls-container">
+            <!-- Categories Filter -->
+            <div class="filter-group">
+                <h4>Categories</h4>
+                <div class="category-filters">
+                    <button class="filter-btn active" data-category="all">All Products</button>
+                    <button class="filter-btn" data-category="t-shirts">T-Shirts</button>
+                    <button class="filter-btn" data-category="pants">Pants</button>
+                    <button class="filter-btn" data-category="shorts">Shorts</button>
+                    <button class="filter-btn" data-category="trousers">Trousers</button>
+                </div>
+            </div>
+
+            <!-- Price Filter -->
+            <div class="filter-group">
+                <h4>Price Range</h4>
+                <div class="price-filters">
+                    <button class="price-btn active" data-price="all">All Prices</button>
+                    <button class="price-btn" data-price="0-40">Under $40</button>
+                    <button class="price-btn" data-price="40-60">$40 - $60</button>
+                    <button class="price-btn" data-price="60-100">$60 - $100</button>
+                    <button class="price-btn" data-price="100-999">Over $100</button>
+                </div>
+            </div>
+
+            <!-- Sort Options -->
+            <div class="filter-group">
+                <h4>Sort By</h4>
+                <select id="sort-options" class="sort-select">
+                    <option value="default">Default Sorting</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="name">Name: A to Z</option>
+                    <option value="popular">Most Popular</option>
+                </select>
+            </div>
+
+            <!-- Search Results Info -->
+            <div class="results-info">
+                <span id="products-count">20 products</span>
+                <button id="clear-filters" class="clear-btn">Clear All Filters</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="Product1" class="section-p1">
+        <div class="pro-container">
+            <!-- f1 to f8 - Featured Products -->
+            <div class="pro" data-category="t-shirts" data-price="45">
+                <a href="sproduct.html" onclick="setProduct('f1')"><img src="img/products/f1.jpg" alt="Classic Cotton T-Shirt"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Classic Cotton T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$45</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <div class="pro" data-category="t-shirts" data-price="55">
+                <a href="sproduct.html" onclick="setProduct('f2')"><img src="img/products/f2.jpg" alt="Premium Fit T-Shirt"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Premium Fit T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$55</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <div class="pro" data-category="t-shirts" data-price="50">
+                <a href="sproduct.html" onclick="setProduct('f3')"><img src="img/products/f3.jpg" alt="Sport Performance T-Shirt"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Sport Performance T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$50</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <div class="pro" data-category="t-shirts" data-price="40">
+                <a href="sproduct.html" onclick="setProduct('f4')"><img src="img/products/f4.jpg" alt="Casual Comfort T-Shirt"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Casual Comfort T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$40</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <div class="pro" data-category="t-shirts" data-price="48">
+                <a href="sproduct.html" onclick="setProduct('f5')"><img src="img/products/f5.jpg" alt="Urban Style T-Shirt"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Urban Style T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$48</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <div class="pro" data-category="t-shirts" data-price="52">
+                <a href="sproduct.html" onclick="setProduct('f6')"><img src="img/products/f6.jpg" alt="Graphic Print T-Shirt"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Graphic Print T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$52</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <div class="pro" data-category="trousers" data-price="65">
+                <a href="sproduct.html" onclick="setProduct('f7')"><img src="img/products/f7.jpg" alt="Athletic Training Trousers"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Athletic Training Trousers</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$65</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <div class="pro" data-category="t-shirts" data-price="47">
+                <a href="sproduct.html" onclick="setProduct('f8')"><img src="img/products/f8.jpg" alt="Slim Fit T-Shirt"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Slim Fit T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$47</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <!-- n1 to n8 - New Collections -->
+            <div class="pro" data-category="t-shirts" data-price="49">
+                <a href="sproduct.html" onclick="setProduct('n1')"><img src="img/products/n1.jpg" alt="Modern Fit T-Shirt"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Modern Fit T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$49</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <div class="pro" data-category="t-shirts" data-price="53">
+                <a href="sproduct.html" onclick="setProduct('n2')"><img src="img/products/n2.jpg" alt="Street Style T-Shirt"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Street Style T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$53</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <div class="pro" data-category="t-shirts" data-price="42">
+                <a href="sproduct.html" onclick="setProduct('n3')"><img src="img/products/n3.jpg" alt="Everyday Comfort T-Shirt"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Everyday Comfort T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$42</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <div class="pro" data-category="t-shirts" data-price="56">
+                <a href="sproduct.html" onclick="setProduct('n4')"><img src="img/products/n4.jpg" alt="Premium Cotton T-Shirt"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Premium Cotton T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$56</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <div class="pro" data-category="t-shirts" data-price="44">
+                <a href="sproduct.html" onclick="setProduct('n5')"><img src="img/products/n5.jpg" alt="Fashion Basic T-Shirt"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Fashion Basic T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$44</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <div class="pro" data-category="shorts" data-price="35">
+                <a href="sproduct.html" onclick="setProduct('n6')"><img src="img/products/n6.jpg" alt="Sport Running Shorts"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Sport Running Shorts</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$35</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <div class="pro" data-category="t-shirts" data-price="46">
+                <a href="sproduct.html" onclick="setProduct('n7')"><img src="img/products/n7.jpg" alt="Casual Wear T-Shirt"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Casual Wear T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$46</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <div class="pro" data-category="t-shirts" data-price="51">
+                <a href="sproduct.html" onclick="setProduct('n8')"><img src="img/products/n8.jpg" alt="Classic Design T-Shirt"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Classic Design T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$51</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <!-- New Pants Products with different images -->
+            <div class="pro" data-category="pants" data-price="75">
+                <a href="sproduct.html" onclick="setProduct('p1')"><img src="https://images.unsplash.com/photo-1666792529510-9616222246d8?q=80&w=435&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Training Jogger Pants"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Training Jogger Pants</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <h4>$75</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <div class="pro" data-category="pants" data-price="85">
+                <a href="sproduct.html" onclick="setProduct('p2')"><img src="https://images.unsplash.com/photo-1624378441864-6eda7eac51cb?q=80&w=388&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Premium Track Pants"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Premium Track Pants</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$85</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <div class="pro" data-category="pants" data-price="68">
+                <a href="sproduct.html" onclick="setProduct('p3')"><img src="https://images.unsplash.com/photo-1714729382668-7bc3bb261662?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Essential Sweatpants"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Essential Sweatpants</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <h4>$68</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+
+            <div class="pro" data-category="pants" data-price="95">
+                <a href="sproduct.html" onclick="setProduct('p4')"><img src="https://images.unsplash.com/photo-1582418702059-97ebafb35d09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHBhbnRzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Designer Cargo Pants"></a>
+                <div class="desc">
+                    <span>Adidas</span>
+                    <h5>Designer Cargo Pants</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>$95</h4>
+                </div>
+                <a href="#"><i class="fal fa-shopping-cart cart"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick View Modal -->
+    <div id="quick-view-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="quick-view-content">
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <section id="pagenation" class="section-p1">
+        <a href="#" class="page-btn active">1</a>
+        <a href="#" class="page-btn">2</a>
+        <a href="#" class="page-btn">3</a>
+        <a href="#" class="page-btn next"><i class="fal fa-long-arrow-alt-right"></i></a>
+    </section>
+
+    <!-- New Features Section -->
+    <section id="shop-features" class="section-p1">
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i class="fas fa-shipping-fast"></i>
+                <h4>Free Shipping</h4>
+                <p>Free shipping on orders over $100</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h4>Secure Payment</h4>
+                <p>100% secure payment processing</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-undo"></i>
+                <h4>Easy Returns</h4>
+                <p>30-day money back guarantee</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-headset"></i>
+                <h4>24/7 Support</h4>
+                <p>Round-the-clock customer support</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="newsletter" class="section-m1 section-p1">
+        <div class="newstext">
+            <h4>Sign Up For Newsletter</h4>
+            <p>Get Email Updates About our latest Shop Products and <span>Special Offers</span></p>
+        </div>
+        <div class="form">
+            <input type="text" name="" id="" placeholder="Enter Your Email">
+            <button class="normal">Sign up</button>
+        </div>
+    </section>
+
+    <footer class="section-p1">
+        <div class="col">
+            <img class="logo" src="img/logo1.png" alt="">
+            <h4>Contact</h4>
+            <p><strong>Address:</strong> COMSATS University Islamabad Sahiwal Campus</p>
+            <p><strong>Phone:</strong> (+92) 317 7543733 /  (+92) 3181647837</p>
+            <p><strong>Working Hours:</strong> 8:30 - 16:30, Mon - Fri</p>
+            <div class="follow">
+                <h4>Follow Us</h4>
+                <div class="icon">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-youtube"></i>
+                    <i class="fab fa-pinterest-p"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h4>About</h4>
+            <a href="#">About Us</a>
+            <a href="#">Delivery Information</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms Condition</a>
+            <a href="#">Contact Us</a>
+        </div>
+        <div class="col">
+            <h4>My Account</h4>
+            <a href="#">Sign In</a>
+            <a href="#">View Cart</a>
+            <a href="#">My Wishlist</a>
+            <a href="#">Track My Order</a>
+            <a href="#">Help</a>
+        </div>
+        <div class="col install">
+            <h4>Install App</h4>
+            <p>From App Store Or Google Play</p>
+            <div class="row">
+                <img src="img/pay/app.jpg" alt="">
+                <img src="img/pay/play.jpg" alt="">
+            </div>
+            <p>Secured Payment Gateways</p>
+            <img src="img/pay/pay.png" alt="">
+        </div>
+        <div class="copyright">
+            <p> @2025/26, NAA - Ecommerce Website</p>
+        </div>
+    </footer>
+
+    <script>
+        // Function to set the product ID in localStorage
+        function setProduct(productId) {
+            localStorage.setItem('selectedProduct', productId);
+        }
+
+        // Enhanced Shop Filtering System
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter elements
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const priceBtns = document.querySelectorAll('.price-btn');
+            const sortSelect = document.getElementById('sort-options');
+            const clearFiltersBtn = document.getElementById('clear-filters');
+            const products = document.querySelectorAll('.pro');
+            const productsCount = document.getElementById('products-count');
+
+            // Update products count
+            function updateProductsCount() {
+                const visibleProducts = document.querySelectorAll('.pro:not([style*="display: none"])');
+                productsCount.textContent = `${visibleProducts.length} products`;
+            }
+
+            // Filter products by category
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const category = this.dataset.category;
+                    filterProducts();
+                });
+            });
+
+            // Filter products by price
+            priceBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    priceBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    filterProducts();
+                });
+            });
+
+            // Sort products
+            sortSelect.addEventListener('change', function() {
+                sortProducts();
+            });
+
+            // Clear all filters
+            clearFiltersBtn.addEventListener('click', function() {
+                filterBtns.forEach(btn => btn.classList.remove('active'));
+                priceBtns.forEach(btn => btn.classList.remove('active'));
+                document.querySelector('[data-category="all"]').classList.add('active');
+                document.querySelector('[data-price="all"]').classList.add('active');
+                sortSelect.value = 'default';
+                
+                // Show all products
+                products.forEach(product => {
+                    product.style.display = 'block';
+                });
+                
+                updateProductsCount();
+            });
+
+            // Main filter function
+            function filterProducts() {
+                const activeCategory = document.querySelector('.filter-btn.active').dataset.category;
+                const activePrice = document.querySelector('.price-btn.active').dataset.price;
+                
+                products.forEach(product => {
+                    const productCategory = product.dataset.category;
+                    const productPrice = parseFloat(product.dataset.price);
+                    
+                    let categoryMatch = activeCategory === 'all' || productCategory === activeCategory;
+                    let priceMatch = activePrice === 'all' || checkPriceRange(productPrice, activePrice);
+                    
+                    if (categoryMatch && priceMatch) {
+                        product.style.display = 'block';
+                    } else {
+                        product.style.display = 'none';
+                    }
+                });
+                
+                updateProductsCount();
+                sortProducts();
+            }
+
+            // Check if price is in range
+            function checkPriceRange(price, range) {
+                if (range === 'all') return true;
+                
+                const [min, max] = range.split('-').map(Number);
+                return price >= min && price <= max;
+            }
+
+            // Sort products
+            function sortProducts() {
+                const sortValue = sortSelect.value;
+                const container = document.querySelector('.pro-container');
+                const visibleProducts = Array.from(products).filter(p => p.style.display !== 'none');
+                
+                visibleProducts.sort((a, b) => {
+                    const priceA = parseFloat(a.dataset.price);
+                    const priceB = parseFloat(b.dataset.price);
+                    const nameA = a.querySelector('h5').textContent.toLowerCase();
+                    const nameB = b.querySelector('h5').textContent.toLowerCase();
+                    
+                    switch(sortValue) {
+                        case 'price-low':
+                            return priceA - priceB;
+                        case 'price-high':
+                            return priceB - priceA;
+                        case 'name':
+                            return nameA.localeCompare(nameB);
+                        case 'popular':
+                            // For demo, sort by rating (all have 5 stars, so randomize)
+                            return Math.random() - 0.5;
+                        default:
+                            return 0;
+                    }
+                });
+                
+                // Reorder products in container
+                visibleProducts.forEach(product => {
+                    container.appendChild(product);
+                });
+            }
+
+            // Quick view functionality
+            products.forEach(product => {
+                product.addEventListener('click', function(e) {
+                    if (!e.target.closest('a') && !e.target.closest('.cart')) {
+                        showQuickView(this);
+                    }
+                });
+            });
+
+            function showQuickView(productElement) {
+                const modal = document.getElementById('quick-view-modal');
+                const content = modal.querySelector('.quick-view-content');
+                const productName = productElement.querySelector('h5').textContent;
+                const productPrice = productElement.querySelector('h4').textContent;
+                const productImage = productElement.querySelector('img').src;
+                
+                content.innerHTML = `
+                    <div class="quick-view-product">
+                        <img src="${productImage}" alt="${productName}">
+                        <div class="quick-view-details">
+                            <h3>${productName}</h3>
+                            <h2>${productPrice}</h2>
+                            <p>Quick preview of this amazing product. Click "View Details" to see full information.</p>
+                            <div class="quick-view-actions">
+                                <button class="normal" onclick="window.location.href='sproduct.html'">View Details</button>
+                                <button class="normal" style="background: #850808;">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                modal.style.display = 'block';
+            }
+
+            // Close modal
+            document.querySelector('.close-modal').addEventListener('click', function() {
+                document.getElementById('quick-view-modal').style.display = 'none';
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(e) {
+                const modal = document.getElementById('quick-view-modal');
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // Initialize
+            updateProductsCount();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAA - Premium Fashion Store</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <script src="script.js"></script>
+    
+    
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader">
+            <div class="loader-logo">
+                <img src="img/logo1.png" alt="NAA">
+            </div>
+            <div class="loader-spinner"></div>
+            <p>Loading Premium Experience...</p>
+        </div>
+    </div>
+
+    <!-- Floating Cart Notification -->
+    <div id="floating-cart-notification">
+        <i class="fas fa-check-circle"></i>
+        <span>Product added to cart!</span>
+    </div>
+
+    <section id="header">
+        <a href="#"><img height="100px" src="img/logo1.png" class="logo" alt="NAA Premium Fashion"></a>
+        <div>
+            <ul id="navbar">
+                <li><a class="active" href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li id="lg-bag">
+                    <a href="cart.html">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span class="cart-count" style="display: none;">0</span>
+                    </a>
+                </li>
+                <a href="#" id="close"><i class="fa fa-times"></i></a>
+                <li id="search-bar">
+                    <input type="text" placeholder="Search premium products..." id="search-input">
+                    <button id="search-btn"><i class="fa fa-search"></i></button>
+                    <button id="voice-search-btn" style="display: none;"><i class="fas fa-microphone"></i></button>
+                </li>
+                <li><a href="#" id="logout-btn">Logout</a></li>
+            </ul>
+        </div>
+        <div id="mobile">
+            <a href="cart.html">
+                <i class="fa fa-shopping-cart"></i>
+                <span class="cart-count" style="display: none;">0</span>
+            </a>
+            <i id="bar" class="fas fa-outdent"></i>
+        </div>
+    </section>
+
+    <!-- Enhanced Hero Section with Parallax -->
+    <section id="hero" class="parallax">
+        <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+            <h4>Exclusive Limited Offer</h4>
+            <h2>Premium Fashion Collection</h2>
+            <h1>Elevate Your Style</h1>
+            <p>Discover curated fashion pieces with up to 70% off & exclusive member benefits</p>
+            
+            <!-- Countdown Timer -->
+            <div class="countdown-timer" data-aos="fade-up" data-aos-delay="300">
+                <div class="timer-box">
+                    <span id="days">00</span>
+                    <small>Days</small>
+                </div>
+                <div class="timer-box">
+                    <span id="hours">00</span>
+                    <small>Hours</small>
+                </div>
+                <div class="timer-box">
+                    <span id="minutes">00</span>
+                    <small>Minutes</small>
+                </div>
+                <div class="timer-box">
+                    <span id="seconds">00</span>
+                    <small>Seconds</small>
+                </div>
+            </div>
+            
+            <div class="hero-buttons" data-aos="fade-up" data-aos-delay="500">
+                <button class="btn-primary" onclick="window.location.href='shop.html'">Shop Collection</button>
+                <button class="btn-secondary" onclick="scrollToProducts()">View Featured</button>
+            </div>
+        </div>
+        
+        <!-- Hero Stats -->
+        <div class="hero-stats" data-aos="fade-up" data-aos-delay="700">
+            <div class="stat">
+                <h3>10K+</h3>
+                <p>Happy Customers</p>
+            </div>
+            <div class="stat">
+                <h3>500+</h3>
+                <p>Premium Products</p>
+            </div>
+            <div class="stat">
+                <h3>50+</h3>
+                <p>Brand Partners</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badges -->
+    <section id="trust-badges" class="section-p1">
+        <div class="badges-container">
+            <div class="badge" data-aos="zoom-in" data-aos-delay="100">
+                <i class="fas fa-shield-alt"></i>
+                <span>Secure Payment</span>
+            </div>
+            <div class="badge" data-aos="zoom-in" data-aos-delay="200">
+                <i class="fas fa-truck"></i>
+                <span>Free Shipping</span>
+            </div>
+            <div class="badge" data-aos="zoom-in" data-aos-delay="300">
+                <i class="fas fa-undo"></i>
+                <span>Easy Returns</span>
+            </div>
+            <div class="badge" data-aos="zoom-in" data-aos-delay="400">
+                <i class="fas fa-headset"></i>
+                <span>24/7 Support</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Features Section - Horizontal Layout -->
+    <section id="premium-features" class="section-p1">
+        <div class="section-header" data-aos="fade-up">
+            <h2>Why Choose NAA?</h2>
+            <p>Premium quality meets exceptional service</p>
+        </div>
+        <div class="features-horizontal">
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-shipping-fast"></i>
+                </div>
+                <div class="feature-content">
+                    <h4>Free Shipping</h4>
+                    <p>Free worldwide shipping on orders over $100 with express delivery options</p>
+                </div>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="150">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-undo-alt"></i>
+                </div>
+                <div class="feature-content">
+                    <h4>Easy Returns</h4>
+                    <p>30-day hassle-free return policy with instant refund processing</p>
+                </div>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="feature-content">
+                    <h4>Secure Payment</h4>
+                    <p>Bank-level encryption keeps your payment information completely safe</p>
+                </div>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="250">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-tags"></i>
+                </div>
+                <div class="feature-content">
+                    <h4>Best Prices</h4>
+                    <p>Guaranteed best prices with our 110% price match guarantee</p>
+                </div>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-award"></i>
+                </div>
+                <div class="feature-content">
+                    <h4>Premium Quality</h4>
+                    <p>Curated selection of premium products with quality assurance</p>
+                </div>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="350">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <div class="feature-content">
+                    <h4>24/7 Support</h4>
+                    <p>Round-the-clock customer support via chat, email, and phone</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products with Enhanced Design -->
+    <section id="featured-products" class="section-p1">
+        <div class="section-header" data-aos="fade-up">
+            <h2>Featured Collection</h2>
+            <p>Handpicked premium products just for you</p>
+        </div>
+        <div class="pro-container">
+            <!-- Product 1 -->
+            <div class="pro" data-aos="fade-up" data-aos-delay="100">
+                <div class="product-badge hot">Hot</div>
+                <a href="sproduct.html" onclick="setProduct('f1')">
+                    <img src="img/products/f1.jpg" alt="Classic Cotton T-Shirt">
+                    <div class="product-overlay">
+                        <span>Quick View</span>
+                    </div>
+                </a>
+                <div class="desc">
+                    <span class="brand">Adidas</span>
+                    <h5>Classic Cotton T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span class="rating-count">(128)</span>
+                    </div>
+                    <div class="price">
+                        <h4>$45</h4>
+                        <del>$78</del>
+                        <span class="discount">-42%</span>
+                    </div>
+                </div>
+                <a href="#" class="cart-add-btn" data-product="f1">
+                    <i class="fal fa-shopping-cart"></i>
+                    Add to Cart
+                </a>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="pro" data-aos="fade-up" data-aos-delay="150">
+                <div class="product-badge new">New</div>
+                <a href="sproduct.html" onclick="setProduct('f2')">
+                    <img src="img/products/f2.jpg" alt="Premium Fit T-Shirt">
+                    <div class="product-overlay">
+                        <span>Quick View</span>
+                    </div>
+                </a>
+                <div class="desc">
+                    <span class="brand">Adidas</span>
+                    <h5>Premium Fit T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span class="rating-count">(95)</span>
+                    </div>
+                    <div class="price">
+                        <h4>$55</h4>
+                        <del>$85</del>
+                        <span class="discount">-35%</span>
+                    </div>
+                </div>
+                <a href="#" class="cart-add-btn" data-product="f2">
+                    <i class="fal fa-shopping-cart"></i>
+                    Add to Cart
+                </a>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="pro" data-aos="fade-up" data-aos-delay="200">
+                <div class="product-badge">Trending</div>
+                <a href="sproduct.html" onclick="setProduct('f3')">
+                    <img src="img/products/f3.jpg" alt="Sport Performance T-Shirt">
+                    <div class="product-overlay">
+                        <span>Quick View</span>
+                    </div>
+                </a>
+                <div class="desc">
+                    <span class="brand">Adidas</span>
+                    <h5>Sport Performance T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span class="rating-count">(210)</span>
+                    </div>
+                    <div class="price">
+                        <h4>$50</h4>
+                        <del>$75</del>
+                        <span class="discount">-33%</span>
+                    </div>
+                </div>
+                <a href="#" class="cart-add-btn" data-product="f3">
+                    <i class="fal fa-shopping-cart"></i>
+                    Add to Cart
+                </a>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="pro" data-aos="fade-up" data-aos-delay="250">
+                <div class="product-badge">Limited</div>
+                <a href="sproduct.html" onclick="setProduct('f4')">
+                    <img src="img/products/f4.jpg" alt="Casual Comfort T-Shirt">
+                    <div class="product-overlay">
+                        <span>Quick View</span>
+                    </div>
+                </a>
+                <div class="desc">
+                    <span class="brand">Adidas</span>
+                    <h5>Casual Comfort T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span class="rating-count">(87)</span>
+                    </div>
+                    <div class="price">
+                        <h4>$40</h4>
+                        <del>$65</del>
+                        <span class="discount">-38%</span>
+                    </div>
+                </div>
+                <a href="#" class="cart-add-btn" data-product="f4">
+                    <i class="fal fa-shopping-cart"></i>
+                    Add to Cart
+                </a>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="pro" data-aos="fade-up" data-aos-delay="300">
+                <div class="product-badge">Bestseller</div>
+                <a href="sproduct.html" onclick="setProduct('f5')">
+                    <img src="img/products/f5.jpg" alt="Urban Style T-Shirt">
+                    <div class="product-overlay">
+                        <span>Quick View</span>
+                    </div>
+                </a>
+                <div class="desc">
+                    <span class="brand">Adidas</span>
+                    <h5>Urban Style T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span class="rating-count">(156)</span>
+                    </div>
+                    <div class="price">
+                        <h4>$48</h4>
+                        <del>$72</del>
+                        <span class="discount">-33%</span>
+                    </div>
+                </div>
+                <a href="#" class="cart-add-btn" data-product="f5">
+                    <i class="fal fa-shopping-cart"></i>
+                    Add to Cart
+                </a>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="pro" data-aos="fade-up" data-aos-delay="350">
+                <div class="product-badge new">New</div>
+                <a href="sproduct.html" onclick="setProduct('f6')">
+                    <img src="img/products/f6.jpg" alt="Graphic Print T-Shirt">
+                    <div class="product-overlay">
+                        <span>Quick View</span>
+                    </div>
+                </a>
+                <div class="desc">
+                    <span class="brand">Adidas</span>
+                    <h5>Graphic Print T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span class="rating-count">(134)</span>
+                    </div>
+                    <div class="price">
+                        <h4>$52</h4>
+                        <del>$80</del>
+                        <span class="discount">-35%</span>
+                    </div>
+                </div>
+                <a href="#" class="cart-add-btn" data-product="f6">
+                    <i class="fal fa-shopping-cart"></i>
+                    Add to Cart
+                </a>
+            </div>
+
+            <!-- Product 7 -->
+            <div class="pro" data-aos="fade-up" data-aos-delay="400">
+                <div class="product-badge">Popular</div>
+                <a href="sproduct.html" onclick="setProduct('f7')">
+                    <img src="img/products/f7.jpg" alt="Athletic Training Trousers">
+                    <div class="product-overlay">
+                        <span>Quick View</span>
+                    </div>
+                </a>
+                <div class="desc">
+                    <span class="brand">Adidas</span>
+                    <h5>Athletic Training Trousers</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span class="rating-count">(98)</span>
+                    </div>
+                    <div class="price">
+                        <h4>$65</h4>
+                        <del>$95</del>
+                        <span class="discount">-32%</span>
+                    </div>
+                </div>
+                <a href="#" class="cart-add-btn" data-product="f7">
+                    <i class="fal fa-shopping-cart"></i>
+                    Add to Cart
+                </a>
+            </div>
+
+            <!-- Product 8 -->
+            <div class="pro" data-aos="fade-up" data-aos-delay="450">
+                <div class="product-badge">Limited</div>
+                <a href="sproduct.html" onclick="setProduct('f8')">
+                    <img src="img/products/f8.jpg" alt="Slim Fit T-Shirt">
+                    <div class="product-overlay">
+                        <span>Quick View</span>
+                    </div>
+                </a>
+                <div class="desc">
+                    <span class="brand">Adidas</span>
+                    <h5>Slim Fit T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span class="rating-count">(112)</span>
+                    </div>
+                    <div class="price">
+                        <h4>$47</h4>
+                        <del>$70</del>
+                        <span class="discount">-33%</span>
+                    </div>
+                </div>
+                <a href="#" class="cart-add-btn" data-product="f8">
+                    <i class="fal fa-shopping-cart"></i>
+                    Add to Cart
+                </a>
+            </div>
+        </div>
+        
+        <div class="view-all-container" data-aos="fade-up">
+            <button class="btn-outline" onclick="window.location.href='shop.html'">
+                View All Products <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Interactive Banner -->
+    <section id="interactive-banner" class="section-m1">
+        <div class="banner-content" data-aos="zoom-in">
+            <h4>Limited Time Offer</h4>
+            <h2>Summer Sale <span>70% OFF</span></h2>
+            <p>Don't miss out on our biggest sale of the season. Limited stock available!</p>
+            <div class="banner-stats">
+                <div class="stat">
+                    <h3>423</h3>
+                    <p>Items Sold</p>
+                </div>
+                <div class="stat">
+                    <h3>58</h3>
+                    <p>Hours Left</p>
+                </div>
+            </div>
+            <button class="btn-primary" onclick="window.location.href='shop.html'">Shop Sale</button>
+        </div>
+    </section>
+
+    <!-- New Arrivals Section -->
+    <section id="new-arrivals" class="section-p1">
+        <div class="section-header" data-aos="fade-up">
+            <h2>New Arrivals</h2>
+            <p>Fresh styles added weekly</p>
+        </div>
+        <div class="pro-container">
+            <!-- New Arrival 1 -->
+            <div class="pro" data-aos="fade-up" data-aos-delay="100">
+                <div class="product-badge new">Just In</div>
+                <a href="sproduct.html" onclick="setProduct('n1')">
+                    <img src="img/products/n1.jpg" alt="Modern Fit T-Shirt">
+                    <div class="product-overlay">
+                        <span>Quick View</span>
+                    </div>
+                </a>
+                <div class="desc">
+                    <span class="brand">Adidas</span>
+                    <h5>Modern Fit T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span class="rating-count">(45)</span>
+                    </div>
+                    <div class="price">
+                        <h4>$49</h4>
+                        <del>$75</del>
+                        <span class="discount">-35%</span>
+                    </div>
+                </div>
+                <a href="#" class="cart-add-btn" data-product="n1">
+                    <i class="fal fa-shopping-cart"></i>
+                    Add to Cart
+                </a>
+            </div>
+
+            <!-- New Arrival 2 -->
+            <div class="pro" data-aos="fade-up" data-aos-delay="150">
+                <div class="product-badge new">Just In</div>
+                <a href="sproduct.html" onclick="setProduct('n2')">
+                    <img src="img/products/n2.jpg" alt="Street Style T-Shirt">
+                    <div class="product-overlay">
+                        <span>Quick View</span>
+                    </div>
+                </a>
+                <div class="desc">
+                    <span class="brand">Adidas</span>
+                    <h5>Street Style T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span class="rating-count">(67)</span>
+                    </div>
+                    <div class="price">
+                        <h4>$53</h4>
+                        <del>$82</del>
+                        <span class="discount">-35%</span>
+                    </div>
+                </div>
+                <a href="#" class="cart-add-btn" data-product="n2">
+                    <i class="fal fa-shopping-cart"></i>
+                    Add to Cart
+                </a>
+            </div>
+            <div class="pro" data-aos="fade-up" data-aos-delay="150">
+                <div class="product-badge new">Just In</div>
+                <a href="sproduct.html" onclick="setProduct('n2')">
+                    <img src="img/products/n3.jpg" alt="Street Style T-Shirt">
+                    <div class="product-overlay">
+                        <span>Quick View</span>
+                    </div>
+                </a>
+                <div class="desc">
+                    <span class="brand">Adidas</span>
+                    <h5>Everyday Comfort T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span class="rating-count">(67)</span>
+                    </div>
+                    <div class="price">
+                        <h4>$42</h4>
+                        <del>$82</del>
+                        <span class="discount">-35%</span>
+                    </div>
+                </div>
+                <a href="#" class="cart-add-btn" data-product="n2">
+                    <i class="fal fa-shopping-cart"></i>
+                    Add to Cart
+                </a>
+            </div>
+            <div class="pro" data-aos="fade-up" data-aos-delay="150">
+                <div class="product-badge new">Just In</div>
+                <a href="sproduct.html" onclick="setProduct('n2')">
+                    <img src="img/products/n4.jpg" alt="Street Style T-Shirt">
+                    <div class="product-overlay">
+                        <span>Quick View</span>
+                    </div>
+                </a>
+                <div class="desc">
+                    <span class="brand">Adidas</span>
+                    <h5>Premium Cotton T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span class="rating-count">(67)</span>
+                    </div>
+                    <div class="price">
+                        <h4>$56</h4>
+                        <del>$82</del>
+                        <span class="discount">-34%</span>
+                    </div>
+                </div>
+                <a href="#" class="cart-add-btn" data-product="n2">
+                    <i class="fal fa-shopping-cart"></i>
+                    Add to Cart
+                </a>
+            </div>
+            <div class="pro" data-aos="fade-up" data-aos-delay="150">
+                <div class="product-badge new">Just In</div>
+                <a href="sproduct.html" onclick="setProduct('n2')">
+                    <img src="img/products/n5.jpg" alt="Street Style T-Shirt">
+                    <div class="product-overlay">
+                        <span>Quick View</span>
+                    </div>
+                </a>
+                <div class="desc">
+                    <span class="brand">Adidas</span>
+                    <h5>Fashion Basic T-Shirt</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span class="rating-count">(67)</span>
+                    </div>
+                    <div class="price">
+                        <h4>$44</h4>
+                        <del>$82</del>
+                        <span class="discount">-35%</span>
+                    </div>
+                </div>
+                <a href="#" class="cart-add-btn" data-product="n2">
+                    <i class="fal fa-shopping-cart"></i>
+                    Add to Cart
+                </a>
+            </div>
+            <div class="pro" data-aos="fade-up" data-aos-delay="150">
+                <div class="product-badge new">Just In</div>
+                <a href="sproduct.html" onclick="setProduct('n2')">
+                    <img src="img/products/n6.jpg" alt="Street Style T-Shirt">
+                    <div class="product-overlay">
+                        <span>Quick View</span>
+                    </div>
+                </a>
+                <div class="desc">
+                    <span class="brand">Adidas</span>
+                    <h5>Sport Running Shorts</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span class="rating-count">(67)</span>
+                    </div>
+                    <div class="price">
+                        <h4>$35</h4>
+                        <del>$82</del>
+                        <span class="discount">-35%</span>
+                    </div>
+                </div>
+                <a href="#" class="cart-add-btn" data-product="n2">
+                    <i class="fal fa-shopping-cart"></i>
+                    Add to Cart
+                </a>
+            </div>
+            
+        </div>
+        
+        <div class="view-all-container" data-aos="fade-up">
+            <button class="btn-outline" onclick="window.location.href='shop.html'">
+                View New Arrivals <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section-p1">
+        <div class="section-header" data-aos="fade-up">
+            <h2>What Our Customers Say</h2>
+            <p>Join thousands of satisfied customers</p>
+        </div>
+        <div class="testimonials-container">
+            <div class="testimonial" data-aos="fade-up" data-aos-delay="100">
+                <div class="testimonial-content">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"The quality of products exceeded my expectations. Fast shipping and great customer service!"</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8d29tZW58ZW58MHx8MHx8fDA%3D" alt="Sarah M.">
+                    <div>
+                        <h5>Sarah M.</h5>
+                        <span>Verified Buyer</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonial-content">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"Best online shopping experience! The products are exactly as described and the quality is amazing."</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="John D.">
+                    <div>
+                        <h5>John D.</h5>
+                        <span>Verified Buyer</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial" data-aos="fade-up" data-aos-delay="300">
+                <div class="testimonial-content">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"Fast delivery and excellent customer support. Will definitely shop here again!"</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Emily R.">
+                    <div>
+                        <h5>Emily R.</h5>
+                        <span>Verified Buyer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter with Enhanced Design -->
+    <section id="premium-newsletter" class="section-m1 section-p1">
+        <div class="newsletter-container" data-aos="fade-up">
+            <div class="newsletter-content">
+                <h4>Join Our Premium Club</h4>
+                <p>Get exclusive access to early sales, special promotions, and member-only discounts</p>
+                <div class="newsletter-benefits">
+                    <span><i class="fas fa-check"></i> First access to new collections</span>
+                    <span><i class="fas fa-check"></i> Members-only discounts</span>
+                    <span><i class="fas fa-check"></i> Early sale notifications</span>
+                </div>
+            </div>
+            <div class="newsletter-form">
+                <input type="email" placeholder="Enter your email address">
+                <button class="btn-primary">Become a Member</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Footer -->
+    <footer class="section-p1">
+        <div class="col">
+            <img class="logo" src="img/logo1.png" alt="">
+            <h4>Contact </h4>
+            <p><strong>Address:</strong> COMSATS University Islamabad Sahiwal Campus</p>
+            <p><strong>Phone:</strong> (+92) 317 7543733 / (+92) 3181647837</p>
+            <p><strong>Working Hours :</strong> 8:30 - 16:30 , Mon - Fri</p>
+            <div class="follow">
+                <h4>Follow Us </h4>
+                <div class="icon">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-youtube"></i>
+                    <i class="fab fa-pinterest-p"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h4>About </h4>
+            <a href="#">About Us</a>
+            <a href="#">Delivery Information</a>
+            <a href="#">Privacy Policy </a>
+            <a href="#">Terms Condition</a>
+            <a href="#">Contact Us </a>
+        </div>
+        <div class="col">
+            <h4>My Account </h4>
+            <a href="#">Sign In</a>
+            <a href="#">View Cart</a>
+            <a href="#">My Wishlist </a>
+            <a href="#">Track My Order</a>
+            <a href="#">Help</a>
+        </div>
+        <div class="col install">
+            <h4>Install App</h4>
+            <p>From App Store Or Google Play </p>
+            <div class="row">
+                <img src="img/pay/app.jpg" alt="">
+                <img src="img/pay/play.jpg" alt="">
+            </div>
+            <p>Secured Payment Gateaways</p>
+            <img src="img/pay/pay.png" alt="">
+        </div>
+        <div class="copyright">
+            <p> @2025/26, NAA - Ecomerce Website </p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Loading Screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loading-screen').style.opacity = '0';
+                setTimeout(function() {
+                    document.getElementById('loading-screen').style.display = 'none';
+                }, 500);
+            }, 1500);
+        });
+
+        // Countdown Timer
+        function updateCountdown() {
+            const countDownDate = new Date().getTime() + (7 * 24 * 60 * 60 * 1000); // 7 days from now
+            
+            const x = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+                document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+                document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+                document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+                
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.querySelector(".countdown-timer").innerHTML = "Offer Expired";
+                }
+            }, 1000);
+        }
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Scroll to Products
+        function scrollToProducts() {
+            document.getElementById('featured-products').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Enhanced Add to Cart
+        document.querySelectorAll('.cart-add-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const productId = this.getAttribute('data-product');
+                
+                // Show floating notification
+                const notification = document.getElementById('floating-cart-notification');
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+                
+                // Add to cart logic here
+                if (window.cart) {
+                    // Your existing cart add logic
+                }
+            });
+        });
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCountdown();
+            
+            // Check if user is logged in
+            if (!localStorage.getItem('currentUser')) {
+                window.location.href = 'login.html';
+            }
+
+            // Logout functionality
+            document.getElementById('logout-btn').addEventListener('click', function (e) {
+                e.preventDefault();
+                localStorage.removeItem('currentUser');
+                window.location.href = 'login.html';
+            });
+
+            // Function to set the product ID in localStorage
+            window.setProduct = function(productId) {
+                localStorage.setItem('selectedProduct', productId);
+            }
+        });
+
+        
+    </script>
+</body>
+
+</html>
